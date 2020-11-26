@@ -7,7 +7,7 @@ Things this does:
 
 Runs CIS hardening from a community Centos module disabling required areas to support cloud images and some areas we configure later (firewall, logs)
 
-Sets up EPEL (required for correct squid version compiled with required modules enabled and some dependancy services)
+Sets up EPEL (required for some dependancy services)
 
 Configures a basic ClamAV setup - this is a basic setup with minimal configuration to run the service.
 

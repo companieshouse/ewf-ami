@@ -1,5 +1,4 @@
-# ami-repository-template
-EWF AMI
+# EWF AMI
 
 Basic setup for a EWF AMI using Centos 6.10.
 

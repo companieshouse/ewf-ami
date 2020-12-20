@@ -32,12 +32,6 @@
     mode: 0644
   with_items: "{{ clamav_daemon_configuration_changes }}"
 
-# Install httpd as required for AMI and to setup the service command required for the next task
-- name: Install httpd
-  yum:
-    name: httpd
-    state: present
-
 - name: Ensure ClamAV daemon is running (if configured).
   service:
     name: "{{ clamav_daemon }}"

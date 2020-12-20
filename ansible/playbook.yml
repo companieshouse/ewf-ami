@@ -3,6 +3,8 @@
   become: true
   roles:
     - centos6-base-repo
+    - epel
+    - generic-packages-config
     - role: RHEL6-CIS
       vars:
         rhel6cis_time_synchronization: chrony
@@ -31,7 +33,6 @@
         rhel6cis_rule_3_6_3: false
         rhel6cis_rule_3_6_4: false
         rhel6cis_rule_3_6_5: false
-    - epel
     - role: clamav
       vars: 
         clamav_daemon_configuration_changes:

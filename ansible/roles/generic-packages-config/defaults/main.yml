@@ -1,0 +1,7 @@
+---
+xml_dependencies:
+  - httpd
+  - openssl
+  - openssh-server
+  - mod_ssl
+  - mod_perl

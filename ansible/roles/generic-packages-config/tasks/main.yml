@@ -7,7 +7,7 @@
   package:
     name: '{{ item }}'
     state: present
-  with_items: '{{ xml_dependencies }}'
+  with_items: '{{ base_ami_dependencies }}'
 - name: Start and enable httpd
   service:
     name: httpd

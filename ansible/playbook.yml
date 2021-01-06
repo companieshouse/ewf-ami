@@ -1,1 +1,9 @@
 ---
+- hosts: ewf-ami
+  become: true
+  roles:
+    - user-dir-basic-config
+
+
+
+    

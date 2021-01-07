@@ -1,4 +1,4 @@
-# Ansible Role: user-dir-basic-config
+# Ansible Role: ewf-app-config
 
 Set SELinux to permissive.
 

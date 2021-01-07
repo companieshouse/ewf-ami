@@ -4,6 +4,7 @@ EWF AMI based on RHEL 6.10 Base AMI.
 
 Things this does:
 
+Build useing RHEL 6.10 Base AMI.
 
 Setup directories and users as required.
 

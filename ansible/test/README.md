@@ -1,4 +1,4 @@
-# RHEL 6 Base AMI testing
+# EWF AMI testing
 
 A simple docker setup to cover testing of Ansible.
 

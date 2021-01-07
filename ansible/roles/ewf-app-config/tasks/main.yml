@@ -1,0 +1,34 @@
+---
+- name: Set SELinux to permissive
+  selinux:
+    policy: targeted
+    state: permissive
+
+- name: Create groups
+  group:
+    name: "chlservices"
+    gid: "600"
+    state: present
+
+- name: Create users
+  user:
+    name: '{{ item.name }}'
+    groups: '{{ item.groups }}'
+    state: present
+  with_items: '{{ users }}'
+
+- name: Add config to ld.so.conf
+  lineinfile:
+    path: /etc/ld.so.conf
+    line: '{{ item }}'
+  with_items:
+    - /usr/lib/oracle/11.2/client64/lib/
+    - /usr/local/lib
+
+- name: Ensure env variables are set
+  lineinfile:
+    path: /home/ewf/.bash_profile
+    line: '{{ item }}'
+  with_items:
+   - export LD_LIBRARY_PATH=/usr/lib/oracle/11.2/client64/lib/
+   - export TNS_ADMIN=/usr/lib/oracle/11.2/client64/lib/

@@ -1,0 +1,8 @@
+---
+groups:
+  - name: chlservices
+    gid: 600
+
+users:
+  - name: ewf
+    groups: chlservices

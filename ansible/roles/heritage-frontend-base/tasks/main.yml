@@ -59,6 +59,7 @@
 #- name: Run python_setup.sh script
   #shell: "/tmp/python_setup.sh > /tmp/python_setup_logs.txt"
 
+
 - name: Download necessary setup files from s3
   aws_s3:
     bucket: s3://development-eu-west-2.resources.ch.gov.uk/
@@ -103,7 +104,7 @@
 
 - name: Remove any exisitng Perl binaries
   file:
-    path: "{{ item }}"
+    path: '{{ item }}'
     state: absent
   with_items:
     - /usr/local/lib64/perl5 
@@ -117,7 +118,19 @@
   copy:
     src: /tmp/usr
     dest: /usr
- 
+
+- name: Install base application files to home path
+  copy:
+    src: "/tmp/{{ item }}"
+    dest: '{{ user_home_path }}'
+  with_items: '{{ user_home_path_content }}'
+
+- name: Remove base application installation files
+  file:
+    path: "/tmp/{{ item }}"
+    state: absent
+  with_items: '{{ user_home_path_content }}'
+
 - name: Delete installation files
   find:
     paths: /tmp

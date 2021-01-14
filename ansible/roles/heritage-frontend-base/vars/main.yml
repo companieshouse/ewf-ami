@@ -10,3 +10,10 @@ s3_files:
   - packages/oracle/oracle-instantclient11.2-devel-11.2.0.2.0.x86_64.rpm
   - packages/oracle/oracle-instantclient11.2-sqlplus-11.2.0.2.0.x86_64.rpm
   - application/ewf/frontend/ewf-frontend.tar.gz
+  - application/ewf/frontend/ewf-app.tar.gz
+
+user_home_path_content:
+  - DATA
+  - MODULES
+  - htdocs
+  - config

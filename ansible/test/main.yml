@@ -4,7 +4,7 @@
   gather_facts: false
   vars:
     inventory:
-      - name: ewf-ami
+      - name: ewf-frontend
         image: "centos:centos6.10"
   roles:
     - role: provision_docker

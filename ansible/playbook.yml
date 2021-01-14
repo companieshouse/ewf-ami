@@ -1,6 +1,9 @@
 ---
-- hosts: ewf-ami
+- hosts: ewf-frontend
   become: true
   roles:
-    - ewf-app-config
+    - role: pip
+    - role: heritage-frontend-base
+    - role: ewf-app-config
+
 

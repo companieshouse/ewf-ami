@@ -1,1 +1,8 @@
 ---
+- hosts: ewf-frontend
+  become: true
+  roles:
+    - role: pip
+    - role: heritage-frontend-base
+    - role: ewf-app-config
+

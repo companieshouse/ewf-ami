@@ -1,1 +1,4 @@
 ---
+
+s3_files:
+  - application/ewf/frontend/ewf-app.tar.gz

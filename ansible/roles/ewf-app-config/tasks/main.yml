@@ -16,3 +16,38 @@
     path: "{{ item.path }}"
     state: absent
   with_items: "{{ files_to_delete.files }}"
+
+- name: Download ewf specific files from s3
+  aws_s3:
+    bucket: s3://development-eu-west-2.resources.ch.gov.uk/
+    object: '{{ item }}'
+    dest: /tmp
+    mode: get
+  with_items: '{{ s3_files }}'
+
+- name: Unarchive tar files
+  unarchive:
+    remote_src: yes
+    src: /tmp/*.tar.gz
+    dest: /tmp
+
+- name: Install base application files
+  copy:
+    src: "/tmp/{{ item }}"
+    dest: /tmp/ewf
+  with_items:
+    - DATA
+    - MODULES
+    - htdocs
+    - config
+
+- name: Remove installation files
+  file:
+    path: "/tmp/{{ item }}"
+    state: absent
+  with_items:
+    - DATA
+    - MODULES
+    - htdocs
+    - config
+    - '*.tar.gz'

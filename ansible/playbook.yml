@@ -22,7 +22,7 @@
     - name: download pip install script
       get_url:
         url: https://bootstrap.pypa.io/get-pip.py
-        dest: /tmp/
+        dest: /tmp
     - name: Find /tmp files
       find:
         paths: /tmp

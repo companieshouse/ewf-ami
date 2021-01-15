@@ -6,7 +6,7 @@
   tasks: 
     - name: Install required files to compile python3.6.6
       yum:
-       name: ['gcc', 'openssl-devel', 'bzip2-devel']
+       name: ['gcc', 'openssl-devel', 'bzip2-devel', 'libselinux-python', 'python-pip']
     - name: download python 3.6.6 files
       get_url:
         url: https://www.python.org/ftp/python/3.6.6/Python-3.6.6.tgz

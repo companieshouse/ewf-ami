@@ -65,6 +65,38 @@
       ansible.builtin.debug:
         msg: "{{ pip_version }}"
       ignore_errors: true
+    - name: Find pip /usr/bin
+      command: ls -l /usr/bin |grep pip
+      register: pip_usrbin
+      ignore_errors: true
+    - name: Output of pip /usr/bin
+      ansible.builtin.debug:
+        msg: "{{ pip_usrbin }}"
+      ignore_errors: true
+    - name: Find pip /usr/local/bin
+      command: ls -l /usr/local/bin |grep pip
+      register: pip_usrlocalbin
+      ignore_errors: true
+    - name: Output of pip /usr/bin
+      ansible.builtin.debug:
+        msg: "{{ pip_usrlocalbin }}"
+      ignore_errors: true
+    - name: Find python /usr/bin
+      command: ls -l /usr/bin |grep python
+      register: python_usrbin
+      ignore_errors: true
+    - name: Output of python /usr/bin
+      ansible.builtin.debug:
+        msg: "{{ python_usrbin }}"
+      ignore_errors: true
+    - name: Find python /usr/local/bin
+      command: ls -l /usr/local/bin |grep python
+      register: python_usrlocalbin
+      ignore_errors: true
+    - name: Output of python /usr/local/bin
+      ansible.builtin.debug:
+        msg: "{{ python_usrlocalbin }}"
+      ignore_errors: true
 
 - name: AMI Build
   hosts: ewf-frontend
@@ -76,7 +108,8 @@
     - name: install boto and botocore
       pip:
         name: ['boto', 'boto3', 'botocore']
-        executable: pip
+        executable: /usr/local/bin/pip
+      ignore_errors: true
   roles:
     #- role: pip
     - role: heritage-frontend-base

@@ -3,6 +3,7 @@ s3_files:
   - packages/oracle/oracle-instantclient11.2-devel-11.2.0.2.0.x86_64.rpm
   - packages/oracle/oracle-instantclient11.2-sqlplus-11.2.0.2.0.x86_64.rpm
   - application/ewf/frontend/ewf-frontend.tar.gz
+  - application/ewf/frontend/ewf-app.tar.gz
 users:
  - name: ewf
 user_home_path: /home/ewf
@@ -13,3 +14,8 @@ pip_install_packages:
    version: "1.4.7"
  - name: botocore
    version: "1.7.36"
+user_home_path_content:
+  - DATA
+  - MODULES
+  - htdocs
+  - config

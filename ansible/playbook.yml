@@ -22,10 +22,16 @@
     - name: download pip install script
       get_url:
         url: https://bootstrap.pypa.io/get-pip.py
-        dest: /usr/src/
+        dest: /tmp/
+    - name: Find /tmp files
+      find:
+        paths: /tmp
+      register: files
+    - name: Output found files in /tmp
+      ansible.builtin.debug:
+        msg: "{{ files }}"
     - name: Run pip install script
-      #command: chdir=/usr/src/ python3.6 get-pip.py
-      command: python3.6 /usr/src/get-pip.py
+      command: /usr/local/bin/python3.6 /tmp/get-pip.py
 - name: AMI Build
   hosts: ewf-frontend
   become: true

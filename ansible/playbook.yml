@@ -1,8 +1,42 @@
 ---
 - hosts: ewf-frontend
   become: true
+  gather_facts: no
+  tasks: 
+    - name: Install required files to compile python3.6.6
+      yum:
+       name: ['gcc', 'openssl-devel', 'bzip2-devel']
+    - name: download python 3.6.6 files
+      get_url:
+        url: https://www.python.org/ftp/python/3.6.6/Python-3.6.6.tgz
+        dest: /tmp
+    - name: Extract python 3.6.6 files
+      ansible.builtin.unarchive:
+        src: /tmp/Python-3.6.6.tgz
+        dest: /tmp/
+        remote_src: yes
+    - name: Run configure for python
+      command: chdir=/tmp/Python-3.6.6 ./configure --enable-optimizations
+    - name: Make Python binary
+      command: chdir=/tmp/Python-3.6.6 make altinstall
+    - name: download pip install script
+      get_url:
+        url: https://bootstrap.pypa.io/get-pip.py
+        dest: /tmp/
+    - name: Run pip install script
+      command: chdir=/tmp/ python3.6 get-pip.py
+- name: AMI Build
+  hosts: ewf-frontend
+  become: true
+  gather_facts: yes
+  vars:
+    ansible_python_interpreter: /usr/local/bin/python3.6
+  tasks:
+    - name: install boto and botocore
+      pip:
+        name: ['boto', 'boto3', 'botocore']
   roles:
-    - role: pip
+    #- role: pip
     - role: heritage-frontend-base
     - role: ewf-app-config
 

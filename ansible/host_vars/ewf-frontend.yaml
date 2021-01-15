@@ -7,7 +7,7 @@ s3_files:
 users:
  - name: ewf
 user_home_path: /home/ewf
-pip_package: python-pip
+#pip_package: python-pip
 pip_install_packages:
  - name: boto
  - name: boto3

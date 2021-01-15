@@ -1,5 +1,6 @@
 ---
-- hosts: ewf-frontend
+- name: AMI Prep
+  hosts: ewf-frontend
   become: true
   gather_facts: no
   tasks: 
@@ -32,16 +33,17 @@
         msg: "{{ files }}"
     - name: Run pip install script
       command: /usr/local/bin/python3.6 /tmp/get-pip.py
+
 - name: AMI Build
   hosts: ewf-frontend
   become: true
   gather_facts: yes
   vars:
     ansible_python_interpreter: /usr/local/bin/python3.6
-  tasks:
-    - name: install boto and botocore
-      pip:
-        name: ['boto', 'boto3', 'botocore']
+  #tasks:
+    #- name: install boto and botocore
+      #pip:
+        #name: ['boto', 'boto3', 'botocore']
   roles:
     #- role: pip
     - role: heritage-frontend-base

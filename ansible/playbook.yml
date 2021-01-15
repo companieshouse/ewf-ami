@@ -4,7 +4,7 @@
   become: true
   gather_facts: no
   tasks: 
-     - name: Find pip path
+    - name: Find pip path
       command: which pip
       register: pip_path
     - name: Output of pip patch

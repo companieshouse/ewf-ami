@@ -4,6 +4,18 @@
   become: true
   gather_facts: no
   tasks: 
+     - name: Find pip path
+      command: which pip
+      register: pip_path
+    - name: Output of pip patch
+      ansible.builtin.debug:
+        msg: "{{ pip_path }}"
+    - name: Find pip version
+      command: pip --version
+      register: pip_version
+    - name: Output of pip version
+      ansible.builtin.debug:
+        msg: "{{ pip_version }}"
     - name: Install required files to compile python3.6.6
       yum:
        name: ['gcc', 'openssl-devel', 'bzip2-devel', 'libselinux-python']
@@ -33,18 +45,18 @@
         msg: "{{ files }}"
     - name: Run pip install script
       command: /usr/local/bin/python3.6 /tmp/get-pip.py
-    - name: Find pip version
-      command: pip --version
-      register: pip_version
-    - name: Output of pip version
-      ansible.builtin.debug:
-        msg: "{{ pip_version }}"
     - name: Find pip path
       command: which pip
       register: pip_path
     - name: Output of pip patch
       ansible.builtin.debug:
         msg: "{{ pip_path }}"
+    - name: Find pip version
+      command: pip --version
+      register: pip_version
+    - name: Output of pip version
+      ansible.builtin.debug:
+        msg: "{{ pip_version }}"
 
 - name: AMI Build
   hosts: ewf-frontend

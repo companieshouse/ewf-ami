@@ -6,7 +6,7 @@
   tasks: 
     - name: Install required files to compile python3.6.6
       yum:
-       name: ['gcc', 'openssl-devel', 'bzip2-devel', 'libselinux-python', 'python-pip']
+       name: ['gcc', 'openssl-devel', 'bzip2-devel', 'libselinux-python']
     - name: download python 3.6.6 files
       get_url:
         url: https://www.python.org/ftp/python/3.6.6/Python-3.6.6.tgz
@@ -33,6 +33,18 @@
         msg: "{{ files }}"
     - name: Run pip install script
       command: /usr/local/bin/python3.6 /tmp/get-pip.py
+    - name: Find pip version
+      command: pip --version
+      register: pip_version
+    - name: Output of pip version
+      ansible.builtin.debug:
+        msg: "{{ pip_version }}"
+    - name: Find pip path
+      command: which pip
+      register: pip_path
+    - name: Output of pip patch
+      ansible.builtin.debug:
+        msg: "{{ pip_path }}"
 
 - name: AMI Build
   hosts: ewf-frontend
@@ -40,10 +52,10 @@
   gather_facts: yes
   vars:
     ansible_python_interpreter: /usr/local/bin/python3.6
-  #tasks:
-    #- name: install boto and botocore
-      #pip:
-        #name: ['boto', 'boto3', 'botocore']
+  pre_tasks:
+    - name: install boto and botocore
+      pip:
+        name: ['boto', 'boto3', 'botocore']
   roles:
     #- role: pip
     - role: heritage-frontend-base

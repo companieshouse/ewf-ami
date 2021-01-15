@@ -24,7 +24,8 @@
         url: https://bootstrap.pypa.io/get-pip.py
         dest: /usr/src/
     - name: Run pip install script
-      command: chdir=/usr/src/ python3.6 get-pip.py
+      #command: chdir=/usr/src/ python3.6 get-pip.py
+      command: python3.6 /usr/src/get-pip.py
 - name: AMI Build
   hosts: ewf-frontend
   become: true

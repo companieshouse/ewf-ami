@@ -7,15 +7,19 @@
     - name: Find pip path
       command: which pip
       register: pip_path
+      ignore_errors: true
     - name: Output of pip patch
       ansible.builtin.debug:
         msg: "{{ pip_path }}"
+      ignore_errors: true
     - name: Find pip version
       command: pip --version
       register: pip_version
+      ignore_errors: true
     - name: Output of pip version
       ansible.builtin.debug:
         msg: "{{ pip_version }}"
+      ignore_errors: true
     - name: Install required files to compile python3.6.6
       yum:
        name: ['gcc', 'openssl-devel', 'bzip2-devel', 'libselinux-python']
@@ -48,15 +52,19 @@
     - name: Find pip path
       command: which pip
       register: pip_path
+      ignore_errors: true
     - name: Output of pip patch
       ansible.builtin.debug:
         msg: "{{ pip_path }}"
+      ignore_errors: true
     - name: Find pip version
       command: pip --version
       register: pip_version
+      ignore_errors: true
     - name: Output of pip version
       ansible.builtin.debug:
         msg: "{{ pip_version }}"
+      ignore_errors: true
 
 - name: AMI Build
   hosts: ewf-frontend
@@ -68,6 +76,7 @@
     - name: install boto and botocore
       pip:
         name: ['boto', 'boto3', 'botocore']
+        executable: pip
   roles:
     #- role: pip
     - role: heritage-frontend-base

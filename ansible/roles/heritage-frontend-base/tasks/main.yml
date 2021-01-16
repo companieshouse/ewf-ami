@@ -3,10 +3,10 @@
   #pip:
     #name: ['boto', 'boto3', 'botocore']
 
-- name: Add 127.0.0.1 to allow hosts
-  lineinfile:
-    path: /etc/hosts.allow
-    line: "ALL: 127.0.0.1"
+#- name: Add 127.0.0.1 to allow hosts
+  #lineinfile:
+    #path: /etc/hosts.allow
+    #line: "ALL: 127.0.0.1"
 
 #- name: Set SELinux to permissive
   #selinux:

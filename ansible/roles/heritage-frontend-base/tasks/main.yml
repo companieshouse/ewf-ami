@@ -9,10 +9,10 @@
     #path: /etc/hosts.allow
     #line: "ALL: 127.0.0.1"
 
-#- name: Set SELinux to permissive
-  #selinux:
-    #policy: targeted
-    #state: permissive
+- name: Set SELinux to permissive
+  selinux:
+    policy: targeted
+    state: permissive
 
 - name: Create groups
   group:
@@ -67,7 +67,8 @@
 
 - name: Download necessary setup files from s3
   aws_s3:
-    bucket: s3://development-eu-west-2.resources.ch.gov.uk/
+    #bucket: s3://development-eu-west-2.resources.ch.gov.uk/
+    bucket: development-eu-west-2.resources.ch.gov.uk
     object: '{{ item }}'
     dest: /tmp
     mode: get

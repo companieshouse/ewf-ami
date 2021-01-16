@@ -4,22 +4,22 @@
     name: ['boto', 'boto3', 'botocore']
     executable: /usr/local/bin/pip
 
-- name: Copy selinux folder to python3.6
-  copy:
-    remote_src: yes
-    src: /usr/lib64/python2.6/site-packages/selinux
-    dest: /usr/local/lib/python3.6/site-packages/selinux
-    mode: 0755
+#- name: Copy selinux folder to python3.6
+  #copy:
+    #remote_src: yes
+    #src: /usr/lib64/python2.6/site-packages/selinux
+    #dest: /usr/local/lib/python3.6/site-packages/selinux
+    #mode: 0755
 
 #- name: Add 127.0.0.1 to allow hosts
   #lineinfile:
     #path: /etc/hosts.allow
     #line: "ALL: 127.0.0.1"
 
-- name: Set SELinux to permissive
-  selinux:
-    policy: targeted
-    state: permissive
+#- name: Set SELinux to permissive
+  #selinux:
+    #policy: targeted
+    #state: permissive
 
 - name: Create groups
   group:
@@ -75,7 +75,7 @@
 - name: Download necessary setup files from s3
   aws_s3:
     bucket: development-eu-west-2.resources.ch.gov.uk
-    object: "packages/oracle/oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm"
+    object: packages/oracle/oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
     dest: /usr/src
     mode: get
   #with_items: '{{ s3_files }}'

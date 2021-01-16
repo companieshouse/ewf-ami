@@ -1,7 +1,8 @@
 ---
-#- name: install boto and botocore
-  #pip:
-    #name: ['boto', 'boto3', 'botocore']
+- name: install boto and botocore
+  pip:
+    name: ['boto', 'boto3', 'botocore']
+    executable: /usr/local/bin/pip
 
 #- name: Add 127.0.0.1 to allow hosts
   #lineinfile:

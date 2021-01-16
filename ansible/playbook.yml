@@ -114,6 +114,17 @@
         msg: "{{ python_usrlocalpackages }}"
       ignore_errors: true
 
+- name: Selinux
+  hosts: ewf-frontend
+  become: true
+  gather_facts: yes
+  tasks:
+    - name: Set SELinux to permissive
+      selinux:
+        policy: targeted
+        state: permissive
+      ignore_errors: true
+      
 - name: AMI Build
   hosts: ewf-frontend
   become: true

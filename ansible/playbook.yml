@@ -4,10 +4,10 @@
   become: true
   gather_facts: no
   tasks: 
-    - name: Set SELinux to permissive
-      selinux:
-        policy: targeted
-        state: permissive
+    #- name: Set SELinux to permissive
+      #selinux:
+        #policy: targeted
+        #state: permissive
     - name: Add 127.0.0.1 to allow hosts
       lineinfile:
         path: /etc/hosts.allow

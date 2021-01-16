@@ -4,10 +4,10 @@
   become: true
   gather_facts: no
   tasks: 
-    #- name: Set SELinux to permissive
-      #selinux:
-        #policy: targeted
-        #state: permissive
+    - name: Set SELinux to permissive
+      selinux:
+        policy: targeted
+        state: permissive
     - name: Add 127.0.0.1 to allow hosts
       lineinfile:
         path: /etc/hosts.allow
@@ -120,16 +120,16 @@
   gather_facts: yes
   vars:
     ansible_python_interpreter: /usr/local/bin/python3.6
-  pre_tasks:
+  #pre_tasks:
     #- name: install boto and botocore
       #pip:
         #name: ['boto', 'boto3', 'botocore']
         #executable: /usr/local/bin/pip
       #ignore_errors: true
-    - name: Set SELinux to permissive
-      selinux:
-        policy: targeted
-        state: permissive
+    #- name: Set SELinux to permissive
+      #selinux:
+        #policy: targeted
+        #state: permissive
   roles:
     #- role: pip
     - role: heritage-frontend-base

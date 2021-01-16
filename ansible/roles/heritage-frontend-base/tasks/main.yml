@@ -6,6 +6,7 @@
 
 - name: Copy selinux folder to python3.6
   copy:
+    remote_src: yes
     src: /usr/lib64/python2.6/site-packages/selinux
     dest: /usr/local/lib/python3.6/site-packages/selinux
     mode: 0755

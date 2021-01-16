@@ -97,6 +97,14 @@
       ansible.builtin.debug:
         msg: "{{ python_usrlocalbin }}"
       ignore_errors: true
+    - name: Find /usr/local/lib/python3.6/site-packages/
+      command: ls -l /usr/local/lib/python3.6/site-packages/
+      register: python_usrlocalpackages
+      ignore_errors: true
+    - name: Output of /usr/local/lib/python3.6/site-packages/
+      ansible.builtin.debug:
+        msg: "{{ python_usrlocalpackages }}"
+      ignore_errors: true
 
 - name: AMI Build
   hosts: ewf-frontend
@@ -109,7 +117,7 @@
       pip:
         name: ['boto', 'boto3', 'botocore']
         executable: /usr/local/bin/pip
-      ignore_errors: true
+      #ignore_errors: true
   roles:
     #- role: pip
     - role: heritage-frontend-base

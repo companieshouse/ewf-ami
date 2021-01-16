@@ -8,10 +8,10 @@
     path: /etc/hosts.allow
     line: "ALL: 127.0.0.1"
 
-- name: Set SELinux to permissive
-  selinux:
-    policy: targeted
-    state: permissive
+#- name: Set SELinux to permissive
+  #selinux:
+    #policy: targeted
+    #state: permissive
 
 - name: Create groups
   group:

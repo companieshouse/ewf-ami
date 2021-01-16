@@ -11,9 +11,9 @@ user_home_path: /home/ewf
 pip_install_packages:
  - name: boto
  - name: boto3
-   version: "1.4.7"
+   #version: "1.4.7"
  - name: botocore
-   version: "1.7.36"
+   #version: "1.7.36"
 user_home_path_content:
   - DATA
   - MODULES

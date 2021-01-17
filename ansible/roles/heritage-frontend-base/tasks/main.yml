@@ -84,7 +84,7 @@
   aws_s3:
     bucket: development-eu-west-2.resources.ch.gov.uk
     object: '{{ item.s3_files }}'
-    dest: /tmp/'{{ item.s3_file_names }}'
+    dest: "/tmp/{{ item.s3_file_names }}"
     mode: get
   with_items: '{{ s3_content }}'
 

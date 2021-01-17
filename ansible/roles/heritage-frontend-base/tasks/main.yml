@@ -146,8 +146,10 @@
   with_items: '{{ tar_files }}'
 
 - name: Install Oracle packages
-  #yum:
-  dnf:
+  vars:
+    ansible_python_interpreter: /usr/bin/python2.6
+  yum:
+  #dnf:
      name: /tmp/'{{ item }}'
      state: present
   with_items:

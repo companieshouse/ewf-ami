@@ -13,7 +13,9 @@ s3_files_app_name:
 
 tar_files:
   - oracle-database-10.2.0.tar.gz
-
+  - ewf-frontend.tar.gz
+  - ewf-app.tar.gz 
+  
 s3_file_app_1: /application/ewf/frontend/ewf-frontend.tar.gz
 s3_file_app_2: /application/ewf/frontend/ewf-app.tar.gz
 s3_files_app_name1: ewf-frontend.tar.gz

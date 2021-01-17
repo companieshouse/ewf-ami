@@ -104,9 +104,17 @@
   aws_s3:
     bucket: development-eu-west-2.resources.ch.gov.uk
     object: '{{ item }}'
-    dest: "/tmp/{{ item | basename}}"
+    dest: "/tmp/{{ item }}"
     mode: get
   with_items: '{{ s3_bucket_items.s3_keys }}'
+
+- name: Download application files from s3 - 2
+  aws_s3:
+    bucket: development-eu-west-2.resources.ch.gov.uk
+    object: '{{ s3_files_app }}'
+    dest: "/tmp/{{ item }}"
+    mode: get
+  with_items: '{{ s3_files_app_name }}'
 
 - name: List contents of /tmp
   command: ls -l /tmp
@@ -125,7 +133,8 @@
   with_items: '{{ tar_files }}'
 
 - name: Install Oracle packages
-  yum:
+  #yum:
+  dnf:
      name: /tmp/'{{ item }}'
      state: present
   with_items:

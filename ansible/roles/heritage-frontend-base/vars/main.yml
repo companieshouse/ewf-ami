@@ -5,7 +5,10 @@ users:
 
 user_home_path: /home/ewf
 
-s3_files_app: /application/ewf/frontend/
+s3_files_app: /application/ewf/frontend/ewf*
+s3_files_app_name:
+  - ewf-frontend.tar.gz
+  - ewf-app.tar.gz 
 
 tar_files:
   - oracle-database-10.2.0.tar.gz

@@ -2,3 +2,5 @@
 groups:
   - name: chlservices
     gid: 600
+
+s3_files_oracle: /packages/oracle/oracle-database-10.2.0.tar.gz

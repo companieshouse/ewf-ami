@@ -102,11 +102,20 @@
     dest: "/tmp/{{ item }}"
     mode: get
   with_items: '{{ s3_bucket_items.s3_keys }}'
-  
+
+- name: List contents of /tmp
+  command: ls -l /tmp
+  register: tmpfiles
+  ignore_errors: true
+- name: Output of /tmp
+  ansible.builtin.debug:
+    msg: "{{ tmpfiles }}"
+  ignore_errors: true
+
 - name: Unarchive tar files
   unarchive:
     remote_src: yes
-    src: /tmp/*.tar.gz
+    src: "/tmp/*.tar.gz"
     dest: /tmp
 
 - name: Install Oracle packages

@@ -100,7 +100,7 @@
     object: '{{ item }}'
     dest: /tmp/
     mode: get
-  with_items: '{{ s3_bucket_items }}'
+  with_items: s3_bucket_items.s3_keys
   
 - name: Unarchive tar files
   unarchive:

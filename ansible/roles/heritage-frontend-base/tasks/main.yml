@@ -95,11 +95,16 @@
     mode: list
   register: s3_bucket_items
 
+- name: Output of app s3 bucket
+  ansible.builtin.debug:
+      msg: "{{ s3_bucket_items }}"
+  ignore_errors: true
+
 - name: Download application files from s3
   aws_s3:
     bucket: development-eu-west-2.resources.ch.gov.uk
     object: '{{ item }}'
-    dest: "/tmp/{{ item }}"
+    dest: "/tmp/{{ item | basename}}"
     mode: get
   with_items: '{{ s3_bucket_items.s3_keys }}'
 
@@ -115,8 +120,9 @@
 - name: Unarchive tar files
   unarchive:
     remote_src: yes
-    src: "/tmp/*.tar.gz"
+    src: "/tmp/{{ item }}"
     dest: /tmp
+  with_items: '{{ tar_files }}'
 
 - name: Install Oracle packages
   yum:

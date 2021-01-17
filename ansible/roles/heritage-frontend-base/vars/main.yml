@@ -7,6 +7,9 @@ user_home_path: /home/ewf
 
 s3_files_app: /application/ewf/frontend/
 
+tar_files:
+  - oracle-database-10.2.0.tar.gz
+
 #s3_files:
   #- /packages/oracle/oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
   #- /packages/oracle/oracle-instantclient11.2-devel-11.2.0.2.0.x86_64.rpm

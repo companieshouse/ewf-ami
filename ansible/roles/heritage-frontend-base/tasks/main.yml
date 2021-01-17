@@ -84,7 +84,7 @@
   aws_s3:
     bucket: development-eu-west-2.resources.ch.gov.uk
     object: '{{ s3_files_oracle }}'
-    dest: /tmp/
+    dest: "/tmp/{{ s3_files_oracle_name }}"
     mode: get
   
 - name: register list of s3 appliction objects

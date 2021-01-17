@@ -75,8 +75,8 @@
 - name: Download necessary setup files from s3
   aws_s3:
     bucket: development-eu-west-2.resources.ch.gov.uk
-    object: packages/oracle/oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
-    dest: /usr/src
+    object: /packages/oracle/oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
+    dest: /usr/src/oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
     mode: get
   #with_items: '{{ s3_files }}'
 

@@ -89,18 +89,19 @@
   
 - name: register list of s3 appliction objects
   aws_s3:     
-    mode: list
     bucket: development-eu-west-2.resources.ch.gov.uk
-    object: '{{ s3_files_app }}'
+    #object: '{{ s3_files_app }}'
+    prefix: '{{ s3_files_app }}'
+    mode: list
   register: s3_bucket_items
 
 - name: Download application files from s3
   aws_s3:
     bucket: development-eu-west-2.resources.ch.gov.uk
     object: '{{ item }}'
-    dest: /tmp/
+    dest: "/tmp/{{ item }}"
     mode: get
-  with_items: s3_bucket_items.s3_keys
+  with_items: '{{ s3_bucket_items.s3_keys }}'
   
 - name: Unarchive tar files
   unarchive:

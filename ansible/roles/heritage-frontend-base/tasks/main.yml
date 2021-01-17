@@ -87,34 +87,47 @@
     dest: "/tmp/{{ s3_files_oracle_name }}"
     mode: get
   
-- name: register list of s3 appliction objects
-  aws_s3:     
-    bucket: development-eu-west-2.resources.ch.gov.uk
+#- name: register list of s3 appliction objects
+  #aws_s3:     
+    #bucket: development-eu-west-2.resources.ch.gov.uk
+    #prefix: '{{ s3_files_app }}'
+    #mode: list
+  #register: s3_bucket_items
+
+#- name: Output of app s3 bucket
+  #ansible.builtin.debug:
+      #msg: "{{ s3_bucket_items }}"
+  #ignore_errors: true
+
+#- name: Download application files from s3
+  #aws_s3:
+    #bucket: development-eu-west-2.resources.ch.gov.uk
+    #object: '{{ item }}'
+    #dest: "/tmp/{{ item }}"
+    #mode: get
+  #with_items: '{{ s3_bucket_items.s3_keys }}'
+
+#- name: Download application files from s3
+  #aws_s3:
+    #bucket: development-eu-west-2.resources.ch.gov.uk
     #object: '{{ s3_files_app }}'
-    prefix: '{{ s3_files_app }}'
-    mode: list
-  register: s3_bucket_items
+    #dest: "/tmp/{{ item }}"
+    #mode: get
+  #with_items: '{{ s3_files_app_name }}'
 
-- name: Output of app s3 bucket
-  ansible.builtin.debug:
-      msg: "{{ s3_bucket_items }}"
-  ignore_errors: true
-
-- name: Download application files from s3
+- name: Download application file 1 from s3
   aws_s3:
     bucket: development-eu-west-2.resources.ch.gov.uk
-    object: '{{ item }}'
-    dest: "/tmp/{{ item }}"
+    object: '{{ s3_file_app_1 }}'
+    dest: "/tmp/{{ s3_files_app_name1 }}"
     mode: get
-  with_items: '{{ s3_bucket_items.s3_keys }}'
 
-- name: Download application files from s3 - 2
+- name: Download application file 2 from s3
   aws_s3:
     bucket: development-eu-west-2.resources.ch.gov.uk
-    object: '{{ s3_files_app }}'
-    dest: "/tmp/{{ item }}"
+    object: '{{ s3_file_app_2 }}'
+    dest: "/tmp/{{ s3_files_app_name2 }}"
     mode: get
-  with_items: '{{ s3_files_app_name }}'
 
 - name: List contents of /tmp
   command: ls -l /tmp

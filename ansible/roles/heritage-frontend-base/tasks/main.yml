@@ -184,11 +184,13 @@
   copy:
     src: /tmp/usr
     dest: /usr
+    remote_src: yes
 
 - name: Install base application files to home path
   copy:
     src: "/tmp/{{ item }}"
     dest: '{{ user_home_path }}'
+    remote_src: yes
   with_items: '{{ user_home_path_content }}'
 
 - name: Remove base application installation files

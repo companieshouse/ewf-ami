@@ -58,7 +58,7 @@
   unarchive:
     remote_src: yes
     src: "/tmp/{{ item }}"
-    dest: "/tmp/{{ item | splitext | first }}"
+    dest: /tmp/
   with_items: '{{ tar_files }}'
 
 - name: List contents of /tmp - 2
@@ -74,7 +74,7 @@
   vars:
     ansible_python_interpreter: /usr/bin/python2.6
   yum:
-     name: /tmp/oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
+     name: /tmp/oracle-database-10.2.0/oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
      state: present
 
 #- name: Install Oracle packages

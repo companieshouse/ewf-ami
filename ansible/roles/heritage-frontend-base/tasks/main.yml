@@ -277,6 +277,8 @@
   ignore_errors: true
 
 - name: Install httpd configs
+  vars:
+    ansible_python_interpreter: /usr/bin/python2.6
   copy:
     src: "{{ item }}"
     dest: "/etc/{{ item }}"

@@ -5,7 +5,6 @@ users:
 
 user_home_path: /home/ewf
 
-#s3_files_app: /application/ewf/frontend/ewf*
 s3_files_app: /application/ewf/frontend/
 s3_files_app_name:
   - ewf-frontend.tar.gz
@@ -15,32 +14,11 @@ tar_files:
   - oracle-database-10.2.0.tar.gz
   - ewf-frontend.tar.gz
   - ewf-app.tar.gz 
-  
+
 s3_file_app_1: /application/ewf/frontend/ewf-frontend.tar.gz
 s3_file_app_2: /application/ewf/frontend/ewf-app.tar.gz
 s3_files_app_name1: ewf-frontend.tar.gz
 s3_files_app_name2: ewf-app.tar.gz
-
-#s3_files:
-  #- /packages/oracle/oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
-  #- /packages/oracle/oracle-instantclient11.2-devel-11.2.0.2.0.x86_64.rpm
-  #- /packages/oracle/oracle-instantclient11.2-sqlplus-11.2.0.2.0.x86_64.rpm
-  #- /application/ewf/frontend/ewf-frontend.tar.gz
-  #- /application/ewf/frontend/ewf-app.tar.gz
-
-#s3_content:
-  #- s3_files:
-      #- /packages/oracle/oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
-      #- /packages/oracle/oracle-instantclient11.2-devel-11.2.0.2.0.x86_64.rpm
-      #- /packages/oracle/oracle-instantclient11.2-sqlplus-11.2.0.2.0.x86_64.rpm
-      #- /application/ewf/frontend/ewf-frontend.tar.gz
-      #- /application/ewf/frontend/ewf-app.tar.gz
-    #s3_file_names:
-      #- oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
-      #- oracle-instantclient11.2-devel-11.2.0.2.0.x86_64.rpm
-      #- oracle-instantclient11.2-sqlplus-11.2.0.2.0.x86_64.rpm
-      #- ewf-frontend.tar.gz
-      #- ewf-app.tar.gz  
 
 user_home_path_content:
   - DATA

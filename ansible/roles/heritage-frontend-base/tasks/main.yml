@@ -11,23 +11,6 @@
     name: ['boto', 'boto3', 'botocore']
     executable: /usr/local/bin/pip
 
-#- name: Copy selinux folder to python3.6
-  #copy:
-    #remote_src: yes
-    #src: /usr/lib64/python2.6/site-packages/selinux
-    #dest: /usr/local/lib/python3.6/site-packages/selinux
-    #mode: 0755
-
-#- name: Add 127.0.0.1 to allow hosts
-  #lineinfile:
-    #path: /etc/hosts.allow
-    #line: "ALL: 127.0.0.1"
-
-#- name: Set SELinux to permissive
-  #selinux:
-    #policy: targeted
-    #state: permissive
-
 - name: Create groups
   group:
     name: "chlservices"
@@ -41,52 +24,6 @@
     state: present
   with_items: '{{ users }}'
 
-#- name: Install python 3.7 required packages
-  #become: true
-  #package:
-    #name:
-      #- python2-boto
-      #- python-pip
-      #- python34
-      #- gcc
-      #- openssl-devel
-      #- bzip2-devel
-      #- libffi-devel
-      #- zlib-devel
-      #- perl
-      #- libtool 
-      #- perl-core
-      #- wget
-    #state: present
-
-#- name: Download libffi-devel package
-  #get_url:
-    #url: "https://vault.centos.org/6.10/os/x86_64/Packages/libffi-devel-3.0.5-3.2.el6.x86_64.rpm"
-    #dest: /usr/src/
-
-#- name: Install libffi-devel package
-  #yum:
-     #name: "/usr/src/libffi-devel-3.0.5-3.2.el6.x86_64.rpm"
-     #state: present
-
-#- name: Copy python_setup.sh script
-  #copy:
-    #src: python_setup.sh
-    #dest: /tmp/python_setup.sh
-    #mode: 0755
-
-#- name: Run python_setup.sh script
-  #shell: "/tmp/python_setup.sh > /tmp/python_setup_logs.txt"
-
-
-#- name: Download necessary setup files from s3
-  #aws_s3:
-    #bucket: development-eu-west-2.resources.ch.gov.uk
-    #object: /packages/oracle/oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
-    #dest: /tmp/oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
-    #mode: get
-  #with_items: '{{ s3_files }}'
-
 - name: Download Oracle setup files from s3
   aws_s3:
     bucket: development-eu-west-2.resources.ch.gov.uk
@@ -94,34 +31,6 @@
     dest: "/tmp/{{ s3_files_oracle_name }}"
     mode: get
   
-#- name: register list of s3 appliction objects
-  #aws_s3:     
-    #bucket: development-eu-west-2.resources.ch.gov.uk
-    #prefix: '{{ s3_files_app }}'
-    #mode: list
-  #register: s3_bucket_items
-
-#- name: Output of app s3 bucket
-  #ansible.builtin.debug:
-      #msg: "{{ s3_bucket_items }}"
-  #ignore_errors: true
-
-#- name: Download application files from s3
-  #aws_s3:
-    #bucket: development-eu-west-2.resources.ch.gov.uk
-    #object: '{{ item }}'
-    #dest: "/tmp/{{ item }}"
-    #mode: get
-  #with_items: '{{ s3_bucket_items.s3_keys }}'
-
-#- name: Download application files from s3
-  #aws_s3:
-    #bucket: development-eu-west-2.resources.ch.gov.uk
-    #object: '{{ s3_files_app }}'
-    #dest: "/tmp/{{ item }}"
-    #mode: get
-  #with_items: '{{ s3_files_app_name }}'
-
 - name: Download application file 1 from s3
   aws_s3:
     bucket: development-eu-west-2.resources.ch.gov.uk

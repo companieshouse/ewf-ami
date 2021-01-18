@@ -4,33 +4,13 @@
   become: true
   gather_facts: no
   tasks: 
-    #- name: Set SELinux to permissive
-      #selinux:
-        #policy: targeted
-        #state: permissive
     - name: Add 127.0.0.1 to allow hosts
       lineinfile:
         path: /etc/hosts.allow
         line: "ALL: 127.0.0.1"
-    - name: Find pip path
-      command: which pip
-      register: pip_path
-      ignore_errors: true
-    - name: Output of pip patch
-      ansible.builtin.debug:
-        msg: "{{ pip_path }}"
-      ignore_errors: true
-    - name: Find pip version
-      command: pip --version
-      register: pip_version
-      ignore_errors: true
-    - name: Output of pip version
-      ansible.builtin.debug:
-        msg: "{{ pip_version }}"
-      ignore_errors: true
     - name: Install required files to compile python3.6.6
       yum:
-       name: ['gcc', 'openssl-devel', 'bzip2-devel', 'libselinux-python']
+       name: ['gcc', 'openssl-devel', 'bzip2-devel']
     - name: download python 3.6.6 files
       get_url:
         url: https://www.python.org/ftp/python/3.6.6/Python-3.6.6.tgz
@@ -48,101 +28,16 @@
       get_url:
         url: https://bootstrap.pypa.io/get-pip.py
         dest: /tmp
-    - name: Find /tmp files
-      find:
-        paths: /tmp
-      register: files
-    - name: Output found files in /tmp
-      ansible.builtin.debug:
-        msg: "{{ files }}"
     - name: Run pip install script
       command: /usr/local/bin/python3.6 /tmp/get-pip.py
-    - name: Find pip path
-      command: which pip
-      register: pip_path
-      ignore_errors: true
-    - name: Output of pip patch
-      ansible.builtin.debug:
-        msg: "{{ pip_path }}"
-      ignore_errors: true
-    - name: Find pip version
-      command: pip --version
-      register: pip_version
-      ignore_errors: true
-    - name: Output of pip version
-      ansible.builtin.debug:
-        msg: "{{ pip_version }}"
-      ignore_errors: true
-    - name: Find pip /usr/bin
-      command: ls -l /usr/bin |grep pip
-      register: pip_usrbin
-      ignore_errors: true
-    - name: Output of pip /usr/bin
-      ansible.builtin.debug:
-        msg: "{{ pip_usrbin }}"
-      ignore_errors: true
-    - name: Find pip /usr/local/bin
-      command: ls -l /usr/local/bin |grep pip
-      register: pip_usrlocalbin
-      ignore_errors: true
-    - name: Output of pip /usr/bin
-      ansible.builtin.debug:
-        msg: "{{ pip_usrlocalbin }}"
-      ignore_errors: true
-    - name: Find python /usr/bin
-      command: ls -l /usr/bin |grep python
-      register: python_usrbin
-      ignore_errors: true
-    - name: Output of python /usr/bin
-      ansible.builtin.debug:
-        msg: "{{ python_usrbin }}"
-      ignore_errors: true
-    - name: Find python /usr/local/bin
-      command: ls -l /usr/local/bin |grep python
-      register: python_usrlocalbin
-      ignore_errors: true
-    - name: Output of python /usr/local/bin
-      ansible.builtin.debug:
-        msg: "{{ python_usrlocalbin }}"
-      ignore_errors: true
-    - name: Find /usr/local/lib/python3.6/site-packages/
-      command: ls -l /usr/local/lib/python3.6/site-packages/
-      register: python_usrlocalpackages
-      ignore_errors: true
-    - name: Output of /usr/local/lib/python3.6/site-packages/
-      ansible.builtin.debug:
-        msg: "{{ python_usrlocalpackages }}"
-      ignore_errors: true
-
-#- name: Selinux
-  #hosts: ewf-frontend
-  #become: true
-  #gather_facts: yes
-  #tasks:
-    #- name: Set SELinux to permissive
-      #selinux:
-        #policy: targeted
-        #state: permissive
-      #ignore_errors: true
-
+  
 - name: AMI Build
   hosts: ewf-frontend
   become: true
   gather_facts: yes
   vars:
     ansible_python_interpreter: /usr/local/bin/python3.6
-  #pre_tasks:
-    #- name: install boto and botocore
-      #pip:
-        #name: ['boto', 'boto3', 'botocore']
-        #executable: /usr/local/bin/pip
-      #ignore_errors: true
-    #- name: Set SELinux to permissive
-      #selinux:
-        #policy: targeted
-        #state: permissive
   roles:
-    #- role: pip
     - role: heritage-frontend-base
     - role: ewf-app-config
 

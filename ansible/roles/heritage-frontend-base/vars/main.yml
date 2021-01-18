@@ -15,10 +15,10 @@ tar_files:
   - ewf-frontend.tar.gz
   - ewf-app.tar.gz 
 
-s3_file_app_1: /application/ewf/frontend/ewf-frontend.tar.gz
-s3_file_app_2: /application/ewf/frontend/ewf-app.tar.gz
-s3_files_app_name1: ewf-frontend.tar.gz
-s3_files_app_name2: ewf-app.tar.gz
+s3_file_app_static: /application/ewf/frontend/ewf-frontend.tar.gz
+s3_file_app: /application/ewf/frontend/ewf-app.tar.gz
+s3_files_app_static_name: ewf-frontend.tar.gz
+s3_files_app_name: ewf-app.tar.gz
 
 user_home_path_content:
   - DATA

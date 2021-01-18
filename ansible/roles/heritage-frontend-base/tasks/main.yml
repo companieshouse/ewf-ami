@@ -30,19 +30,40 @@
     object: '{{ s3_files_oracle }}'
     dest: "/tmp/{{ s3_files_oracle_name }}"
     mode: get
-  
-- name: Download application file 1 from s3
+
+- name: Download Oracle setup files from s3 - basic rpm
   aws_s3:
     bucket: development-eu-west-2.resources.ch.gov.uk
-    object: '{{ s3_file_app_1 }}'
-    dest: "/tmp/{{ s3_files_app_name1 }}"
+    object: '{{ s3_files_oracle_basic_rpm }}'
+    dest: "/tmp/{{ s3_files_oracle_basic_rpm_name }}"
     mode: get
 
-- name: Download application file 2 from s3
+- name: Download Oracle setup files from s3 - devel rpm
   aws_s3:
     bucket: development-eu-west-2.resources.ch.gov.uk
-    object: '{{ s3_file_app_2 }}'
-    dest: "/tmp/{{ s3_files_app_name2 }}"
+    object: '{{ s3_files_oracle_devel_rpm }}'
+    dest: "/tmp/{{ s3_files_oracle_devel_rpm_name }}"
+    mode: get
+
+- name: Download Oracle setup files from s3 - sqlplus rpm
+  aws_s3:
+    bucket: development-eu-west-2.resources.ch.gov.uk
+    object: '{{ s3_files_oracle_sqlplus_rpm }}'
+    dest: "/tmp/{{ s3_files_oracle_sqlplus_rpm_name }}"
+    mode: get
+
+- name: Download static application files from s3
+  aws_s3:
+    bucket: development-eu-west-2.resources.ch.gov.uk
+    object: '{{ s3_file_app_static }}'
+    dest: "/tmp/{{ s3_files_app_static_name }}"
+    mode: get
+
+- name: Download application files from s3
+  aws_s3:
+    bucket: development-eu-west-2.resources.ch.gov.uk
+    object: '{{ s3_file_app }}'
+    dest: "/tmp/{{ s3_files_app_name }}"
     mode: get
 
 - name: List contents of /tmp
@@ -62,7 +83,7 @@
   with_items: '{{ tar_files }}'
 
 - name: List contents of /tmp - 2
-  command: ls -l /tmp
+  command: ls -al /tmp
   register: tmpfiles2
   ignore_errors: true
 - name: Output of /tmp - 2
@@ -70,24 +91,33 @@
     msg: "{{ tmpfiles2 }}"
   ignore_errors: true
 
-- name: Install Oracle packages
-  vars:
-    ansible_python_interpreter: /usr/bin/python2.6
-  yum:
-     name: /tmp/oracle-database-10.2.0/oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
-     state: present
+- name: Find contents of /tmp - 2
+  command: find /tmp -name *.rpm
+  register: tmpfiles3
+  ignore_errors: true
+- name: Output of find /tmp - 2
+  ansible.builtin.debug:
+    msg: "{{ tmpfiles3 }}"
+  ignore_errors: true
 
 #- name: Install Oracle packages
   #vars:
     #ansible_python_interpreter: /usr/bin/python2.6
   #yum:
-  #dnf:
-     #name: /tmp/'{{ item }}'
+     #name: /tmp/oracle-database-10.2.0/oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
      #state: present
-  #with_items:
-    #- oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
-    #- oracle-instantclient11.2-devel-11.2.0.2.0.x86_64.rpm
-    #- oracle-instantclient11.2-sqlplus-11.2.0.2.0.x86_64.rpm
+
+- name: Install Oracle packages
+  vars:
+    ansible_python_interpreter: /usr/bin/python2.6
+  yum:
+  #dnf:
+     name: /tmp/'{{ item }}'
+     state: present
+  with_items:
+    - oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
+    - oracle-instantclient11.2-devel-11.2.0.2.0.x86_64.rpm
+    - oracle-instantclient11.2-sqlplus-11.2.0.2.0.x86_64.rpm
 
 - name: Ensure env variables are set
   lineinfile:

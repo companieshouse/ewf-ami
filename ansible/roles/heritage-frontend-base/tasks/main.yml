@@ -123,6 +123,7 @@
      #name: "/tmp/{{ oracle_packages }}"
      #state: present
 
+# Using 3 separate tasks as using a list caused failures in concourse pipeline
 - name: Install Oracle packages - basic
   vars:
     ansible_python_interpreter: /usr/bin/python2.6
@@ -145,6 +146,8 @@
      state: present
 
 - name: Ensure env variables are set
+  vars:
+    ansible_python_interpreter: /usr/bin/python2.6
   lineinfile:
     path: "{{ user_home_path }}/.bash_profile"
     line: '{{ item }}'
@@ -153,6 +156,8 @@
    - export TNS_ADMIN=/usr/lib/oracle/11.2/client64/lib/
 
 - name: Add config to ld.so.conf
+  vars:
+    ansible_python_interpreter: /usr/bin/python2.6
   lineinfile:
     path: /etc/ld.so.conf
     line: '{{ item }}'

@@ -13,9 +13,9 @@
     path: /tmp/etc
     state: absent
 
-- name: Start and enable httpd
-  service:
-    name: httpd
-    state: started
-    enabled: true
+#- name: Start and enable httpd
+  #service:
+    #name: httpd
+    #state: started
+    #enabled: true
     

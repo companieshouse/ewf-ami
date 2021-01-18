@@ -17,6 +17,13 @@
     state: absent
   with_items: "{{ files_to_delete.files }}"
 
+- name: Remove any exisitng httpd.conf
+  file:
+    path: '{{ item }}'
+    state: absent
+  with_items:
+    - httpd/conf/httpd.conf
+   
 - name: Install httpd configs
   copy:
     src: "{{ item }}"

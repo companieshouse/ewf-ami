@@ -116,11 +116,32 @@
      #name: /tmp/oracle-database-10.2.0/oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
      #state: present
 
-- name: Install Oracle packages
+#- name: Install Oracle packages
+  #vars:
+    #ansible_python_interpreter: /usr/bin/python2.6
+  #yum:
+     #name: "/tmp/{{ oracle_packages }}"
+     #state: present
+
+- name: Install Oracle packages - basic
   vars:
     ansible_python_interpreter: /usr/bin/python2.6
   yum:
-     name: "/tmp/{{ oracle_packages }}"
+     name: "/tmp/{{ oracle_packages_basic }}"
+     state: present
+
+- name: Install Oracle packages - devel
+  vars:
+    ansible_python_interpreter: /usr/bin/python2.6
+  yum:
+     name: "/tmp/{{ oracle_packages_devel }}"
+     state: present
+
+- name: Install Oracle packages - sqlplus
+  vars:
+    ansible_python_interpreter: /usr/bin/python2.6
+  yum:
+     name: "/tmp/{{ oracle_packages_sqlplus }}"
      state: present
 
 - name: Ensure env variables are set

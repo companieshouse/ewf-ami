@@ -17,3 +17,7 @@ oracle_packages:
   - oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
   - oracle-instantclient11.2-devel-11.2.0.2.0.x86_64.rpm
   - oracle-instantclient11.2-sqlplus-11.2.0.2.0.x86_64.rpm
+
+oracle_packages_basic: oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
+oracle_packages_devel: oracle-instantclient11.2-devel-11.2.0.2.0.x86_64.rpm
+oracle_packages_sqlplus: oracle-instantclient11.2-sqlplus-11.2.0.2.0.x86_64.rpm

@@ -149,7 +149,7 @@
   unarchive:
     remote_src: yes
     src: "/tmp/{{ item }}"
-    dest: /tmp
+    dest: "/tmp/{{ item | splitext | first }}"
   with_items: '{{ tar_files }}'
 
 - name: List contents of /tmp - 2

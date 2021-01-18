@@ -18,43 +18,6 @@
     state: absent
   with_items: "{{ files_to_delete.files }}"
 
-- name: Remove any exisitng httpd.conf
-  file:
-    path: '{{ item }}'
-    state: absent
-  with_items: '{{ http_conf }}'
-    #- /etc/httpd/conf/httpd.conf
-
-- name: Find http conf before
-  command: ls -l /etc/httpd/conf/httpd.conf
-  register: http_conf1
-  ignore_errors: true
-- name: Output of http conf
-  ansible.builtin.debug:
-    msg: "{{ http_conf1 }}"
-  ignore_errors: true
-
-- name: Install httpd configs
-  copy:
-    src: "{{ item }}"
-    dest: "/etc/{{ item }}"
-    owner: ewf
-    group: chlservices
-    mode: 0775
-  with_items: '{{ http_config }}'
-    #- httpd/conf.d/ewf_perl.conf
-    #- httpd/conf/ewf_startup.pl
-    #- httpd/conf/httpd.conf
-
-- name: Find http conf 2
-  command: ls -l /etc/httpd/conf/
-  register: http_conf2
-  ignore_errors: true
-- name: Output of http conf
-  ansible.builtin.debug:
-    msg: "{{ http_conf12}}"
-  ignore_errors: true
-
 - name: Start and enable httpd
   service:
     name: httpd

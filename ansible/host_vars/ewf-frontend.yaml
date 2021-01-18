@@ -11,17 +11,23 @@ s3_files_app_name:
   - ewf-app.tar.gz 
 
 tar_files:
-  - oracle-database-10.2.0.tar.gz
   - ewf-frontend.tar.gz
   - ewf-app.tar.gz 
 
-s3_file_app_1: /application/ewf/frontend/ewf-frontend.tar.gz
-s3_file_app_2: /application/ewf/frontend/ewf-app.tar.gz
-s3_files_app_name1: ewf-frontend.tar.gz
-s3_files_app_name2: ewf-app.tar.gz
+s3_file_app_static: /application/ewf/frontend/ewf-frontend.tar.gz
+s3_file_app: /application/ewf/frontend/ewf-app.tar.gz
+s3_files_app_static_name: ewf-frontend.tar.gz
+s3_files_app_name: ewf-app.tar.gz
 
 user_home_path_content:
   - DATA
   - MODULES
   - htdocs
   - config
+
+files_to_remove: 'oracle-instantclient*,*.tar.gz,usr'
+
+http_config:
+  - httpd/conf.d/ewf_perl.conf
+  - httpd/conf/ewf_startup.pl
+  - httpd/conf/httpd.conf

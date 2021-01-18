@@ -37,3 +37,5 @@ perl_binaries:
   - /usr/share/perl5/vendor_perl 
   - /usr/lib64/perl5 
   - /usr/share/perl5
+
+http_conf: /etc/httpd/conf/httpd.conf

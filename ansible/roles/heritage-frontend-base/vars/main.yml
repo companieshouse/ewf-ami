@@ -26,3 +26,8 @@ user_home_path_content:
   - config
 
 files_to_remove: 'oracle-instantclient*,*.tar.gz,usr'
+
+http_config:
+  - httpd/conf.d/ewf_perl.conf
+  - httpd/conf/ewf_startup.pl
+  - httpd/conf/httpd.conf

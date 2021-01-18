@@ -24,12 +24,12 @@
     state: present
   with_items: '{{ users }}'
 
-- name: Download Oracle setup files from s3
-  aws_s3:
-    bucket: development-eu-west-2.resources.ch.gov.uk
-    object: '{{ s3_files_oracle }}'
-    dest: "/tmp/{{ s3_files_oracle_name }}"
-    mode: get
+#- name: Download Oracle setup files from s3
+  #aws_s3:
+    #bucket: development-eu-west-2.resources.ch.gov.uk
+    #object: '{{ s3_files_oracle }}'
+    #dest: "/tmp/{{ s3_files_oracle_name }}"
+    #mode: get
 
 - name: Download Oracle setup files from s3 - basic rpm
   aws_s3:
@@ -111,13 +111,8 @@
   vars:
     ansible_python_interpreter: /usr/bin/python2.6
   yum:
-  #dnf:
-     name: /tmp/'{{ item }}'
+     name: "/tmp/{{ oracle_packages }}"
      state: present
-  with_items:
-    - oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
-    - oracle-instantclient11.2-devel-11.2.0.2.0.x86_64.rpm
-    - oracle-instantclient11.2-sqlplus-11.2.0.2.0.x86_64.rpm
 
 - name: Ensure env variables are set
   lineinfile:

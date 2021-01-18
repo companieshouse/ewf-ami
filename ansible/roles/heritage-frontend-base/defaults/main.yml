@@ -12,3 +12,8 @@ s3_files_oracle_sqlplus_rpm: /packages/oracle/oracle-instantclient11.2-sqlplus-1
 s3_files_oracle_basic_rpm_name: oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
 s3_files_oracle_devel_rpm_name: oracle-instantclient11.2-devel-11.2.0.2.0.x86_64.rpm
 s3_files_oracle_sqlplus_rpm_name: oracle-instantclient11.2-sqlplus-11.2.0.2.0.x86_64.rpm
+
+oracle_packages:
+  - oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
+  - oracle-instantclient11.2-devel-11.2.0.2.0.x86_64.rpm
+  - oracle-instantclient11.2-sqlplus-11.2.0.2.0.x86_64.rpm

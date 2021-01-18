@@ -1,4 +1,11 @@
 ---
+- name: Set SELinux to permissive
+  vars:
+    ansible_python_interpreter: /usr/bin/python2.6
+  selinux:
+    policy: targeted
+    state: permissive
+
 - name: install boto and botocore
   pip:
     name: ['boto', 'boto3', 'botocore']
@@ -144,6 +151,15 @@
     src: "/tmp/{{ item }}"
     dest: /tmp
   with_items: '{{ tar_files }}'
+
+- name: List contents of /tmp - 2
+  command: ls -l /tmp
+  register: tmpfiles2
+  ignore_errors: true
+- name: Output of /tmp - 2
+  ansible.builtin.debug:
+    msg: "{{ tmpfiles2 }}"
+  ignore_errors: true
 
 - name: Install Oracle packages
   vars:

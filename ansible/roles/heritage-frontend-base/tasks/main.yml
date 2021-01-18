@@ -300,9 +300,3 @@
   ansible.builtin.debug:
     msg: "{{ http_conf2 }}"
   ignore_errors: true
-
-- name: Start and enable httpd
-  service:
-    name: httpd
-    state: started
-    enabled: true

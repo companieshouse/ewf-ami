@@ -281,9 +281,9 @@
     src: "{{ item }}"
     dest: "/etc/{{ item }}"
     #owner: ewf
-    owner: '{{ name }}'
+    owner: '{{ user }}'
     #group: chlservices
-    group: '{{ groups }}'
+    group: '{{ group }}'
     mode: 0775
   with_items: '{{ http_config }}'
     #- httpd/conf.d/ewf_perl.conf

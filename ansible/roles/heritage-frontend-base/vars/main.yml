@@ -32,3 +32,6 @@ http_config:
   - httpd/conf.d/ewf_perl.conf
   - httpd/conf/ewf_startup.pl
   - httpd/conf/httpd.conf
+
+user: ewf
+group: chlservices

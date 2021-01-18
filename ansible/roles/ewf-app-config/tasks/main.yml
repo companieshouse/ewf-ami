@@ -1,5 +1,7 @@
 ---
 - name: Apply mod_cookietrack.so http module
+  vars:
+    ansible_python_interpreter: /usr/bin/python2.6
   copy:
     src: /tmp/etc/httpd/modules/mod_cookietrack.so
     dest: /etc/httpd/modules/mod_cookietrack.so

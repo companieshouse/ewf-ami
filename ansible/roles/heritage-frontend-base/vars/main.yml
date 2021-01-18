@@ -25,4 +25,4 @@ user_home_path_content:
   - htdocs
   - config
 
-files_to_remove: 'oracle-instantclient*,*.tar.gz,usr,DATA,MODULES,htdocs,config'
+files_to_remove: 'oracle-instantclient*,*.tar.gz,usr'

@@ -21,3 +21,19 @@ oracle_packages:
 oracle_packages_basic: oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
 oracle_packages_devel: oracle-instantclient11.2-devel-11.2.0.2.0.x86_64.rpm
 oracle_packages_sqlplus: oracle-instantclient11.2-sqlplus-11.2.0.2.0.x86_64.rpm
+
+env_var:
+   - export LD_LIBRARY_PATH=/usr/lib/oracle/11.2/client64/lib/
+   - export TNS_ADMIN=/usr/lib/oracle/11.2/client64/lib/
+
+ld_so_conf:
+    - /usr/lib/oracle/11.2/client64/lib/
+    - /usr/local/lib
+
+perl_binaries:
+  - /usr/local/lib64/perl5 
+  - /usr/local/share/perl5 
+  - /usr/lib64/perl5/vendor_perl 
+  - /usr/share/perl5/vendor_perl 
+  - /usr/lib64/perl5 
+  - /usr/share/perl5

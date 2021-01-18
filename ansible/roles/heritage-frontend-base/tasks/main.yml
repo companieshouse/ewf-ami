@@ -24,13 +24,7 @@
     state: present
   with_items: '{{ users }}'
 
-#- name: Download Oracle setup files from s3
-  #aws_s3:
-    #bucket: development-eu-west-2.resources.ch.gov.uk
-    #object: '{{ s3_files_oracle }}'
-    #dest: "/tmp/{{ s3_files_oracle_name }}"
-    #mode: get
-
+# Can only download one object at a time
 - name: Download Oracle setup files from s3 - basic rpm
   aws_s3:
     bucket: development-eu-west-2.resources.ch.gov.uk
@@ -151,9 +145,18 @@
   lineinfile:
     path: "{{ user_home_path }}/.bash_profile"
     line: '{{ item }}'
-  with_items:
-   - export LD_LIBRARY_PATH=/usr/lib/oracle/11.2/client64/lib/
-   - export TNS_ADMIN=/usr/lib/oracle/11.2/client64/lib/
+  with_items: '{{ env_var }}'
+   #- export LD_LIBRARY_PATH=/usr/lib/oracle/11.2/client64/lib/
+   #- export TNS_ADMIN=/usr/lib/oracle/11.2/client64/lib/
+
+- name: Find contents of home env
+  command: cat /home/ewf/.bash_profile
+  register: homeenv
+  ignore_errors: true
+- name: Output of home env
+  ansible.builtin.debug:
+    msg: "{{ homeenv }}"
+  ignore_errors: true
 
 - name: Add config to ld.so.conf
   vars:
@@ -161,9 +164,18 @@
   lineinfile:
     path: /etc/ld.so.conf
     line: '{{ item }}'
-  with_items:
-    - /usr/lib/oracle/11.2/client64/lib/
-    - /usr/local/lib
+  with_items: '{{ ld_so_conf }}'
+    #- /usr/lib/oracle/11.2/client64/lib/
+    #- /usr/local/lib
+
+- name: Find contents of ld so conf
+  command: cat /home/ewf/.bash_profile
+  register: ldconf
+  ignore_errors: true
+- name: Output of ld so conf
+  ansible.builtin.debug:
+    msg: "{{ ldconf }}"
+  ignore_errors: true
 
 - name: Run ldconfig
   command: /sbin/ldconfig
@@ -172,19 +184,37 @@
   file:
     path: '{{ item }}'
     state: absent
-  with_items:
-    - /usr/local/lib64/perl5 
-    - /usr/local/share/perl5 
-    - /usr/lib64/perl5/vendor_perl 
-    - /usr/share/perl5/vendor_perl 
-    - /usr/lib64/perl5 
-    - /usr/share/perl5
+  with_items: '{{ perl_binaries }}'
+    #- /usr/local/lib64/perl5 
+    #- /usr/local/share/perl5 
+    #- /usr/lib64/perl5/vendor_perl 
+    #- /usr/share/perl5/vendor_perl 
+    #- /usr/lib64/perl5 
+    #- /usr/share/perl5
+
+- name: Find contents of perl binaries after delete
+  command: ls -l /usr/lib64/perl5/vendor_perl
+  register: perl_bin_before
+  ignore_errors: true
+- name: Output of perl binaries after delete
+  ansible.builtin.debug:
+    msg: "{{ perl_bin_before }}"
+  ignore_errors: true
 
 - name: Install Perl binaries
   copy:
     src: /tmp/usr
-    dest: /usr
+    dest: /
     remote_src: yes
+
+- name: Find contents of perl binaries
+  command: ls -l /usr/lib64/perl5/vendor_perl
+  register: perl_bin
+  ignore_errors: true
+- name: Output of perl binaries
+  ansible.builtin.debug:
+    msg: "{{ perl_bin }}"
+  ignore_errors: true
 
 - name: Install base application files to home path
   copy:
@@ -192,6 +222,15 @@
     dest: '{{ user_home_path }}'
     remote_src: yes
   with_items: '{{ user_home_path_content }}'
+
+- name: Find app contents of home dir
+  command: ls -l /home/ewf
+  register: home_app
+  ignore_errors: true
+- name: Output of app home dir
+  ansible.builtin.debug:
+    msg: "{{ home_app }}"
+  ignore_errors: true
 
 - name: Remove base application installation files
   file:
@@ -211,3 +250,12 @@
     path: "{{ item.path }}"
     state: absent
   with_items: "{{ files_to_delete.files }}"
+
+- name: Find /tmp final output
+  command: ls -l /tmp
+  register: tmp_final
+  ignore_errors: true
+- name: Output of /tmp final
+  ansible.builtin.debug:
+    msg: "{{ tmp_final }}"
+  ignore_errors: true

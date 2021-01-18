@@ -169,7 +169,7 @@
     #- /usr/local/lib
 
 - name: Find contents of ld so conf
-  command: cat /home/ewf/.bash_profile
+  command: cat /etc/ld.so.conf
   register: ldconf
   ignore_errors: true
 - name: Output of ld so conf
@@ -281,9 +281,9 @@
     src: "{{ item }}"
     dest: "/etc/{{ item }}"
     #owner: ewf
-    owner: '{{ users.name }}'
+    owner: '{{ name }}'
     #group: chlservices
-    group: '{{ users.group }}'
+    group: '{{ groups }}'
     mode: 0775
   with_items: '{{ http_config }}'
     #- httpd/conf.d/ewf_perl.conf
@@ -296,7 +296,7 @@
   ignore_errors: true
 - name: Output of http conf
   ansible.builtin.debug:
-    msg: "{{ http_conf12}}"
+    msg: "{{ http_conf2 }}"
   ignore_errors: true
 
 - name: Start and enable httpd

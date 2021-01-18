@@ -24,8 +24,9 @@ user_home_path_content:
   - MODULES
   - htdocs
   - config
+  - usr
 
-files_to_remove: 'oracle-instantclient*,*.tar.gz,usr'
+files_to_remove: 'oracle-instantclient*,*.tar.gz,get-pip*,Python*'
 
 http_config:
   - httpd/conf.d/ewf_perl.conf

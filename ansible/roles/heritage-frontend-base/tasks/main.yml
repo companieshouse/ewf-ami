@@ -149,13 +149,20 @@
   vars:
     ansible_python_interpreter: /usr/bin/python2.6
   yum:
-  #dnf:
-     name: /tmp/'{{ item }}'
+     name: /tmp/oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
      state: present
-  with_items:
-    - oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
-    - oracle-instantclient11.2-devel-11.2.0.2.0.x86_64.rpm
-    - oracle-instantclient11.2-sqlplus-11.2.0.2.0.x86_64.rpm
+
+#- name: Install Oracle packages
+  #vars:
+    #ansible_python_interpreter: /usr/bin/python2.6
+  #yum:
+  #dnf:
+     #name: /tmp/'{{ item }}'
+     #state: present
+  #with_items:
+    #- oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
+    #- oracle-instantclient11.2-devel-11.2.0.2.0.x86_64.rpm
+    #- oracle-instantclient11.2-sqlplus-11.2.0.2.0.x86_64.rpm
 
 - name: Ensure env variables are set
   lineinfile:

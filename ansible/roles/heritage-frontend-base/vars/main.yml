@@ -11,7 +11,6 @@ s3_files_app_name:
   - ewf-app.tar.gz 
 
 tar_files:
-  - oracle-database-10.2.0.tar.gz
   - ewf-frontend.tar.gz
   - ewf-app.tar.gz 
 
@@ -25,3 +24,5 @@ user_home_path_content:
   - MODULES
   - htdocs
   - config
+
+files_to_remove: 'oracle-instantclient*,*.tar.gz,usr,DATA,MODULES,htdocs,config'

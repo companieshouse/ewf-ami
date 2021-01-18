@@ -100,6 +100,15 @@
     msg: "{{ tmpfiles3 }}"
   ignore_errors: true
 
+- name: Find module mod_cookietrack
+  command: find /tmp -name mod_cookietrack.so
+  register: tmpfiles4
+  ignore_errors: true
+- name: Output of find module mod_cookietrack
+  ansible.builtin.debug:
+    msg: "{{ tmpfiles4 }}"
+  ignore_errors: true
+
 #- name: Install Oracle packages
   #vars:
     #ansible_python_interpreter: /usr/bin/python2.6
@@ -165,7 +174,8 @@
 - name: Delete installation files
   find:
     paths: /tmp
-    patterns: 'oracle-instantclient*,*.tar.gz,*perl5,*vendor_perl,python*'
+    #patterns: 'oracle-instantclient*,*.tar.gz,usr,'
+    patterns: '{{ files_to_remove }}'  
   register: files_to_delete
 
 - name: Remove installation files

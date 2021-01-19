@@ -13,9 +13,16 @@
     path: /tmp/etc
     state: absent
 
-#- name: Start and enable httpd
-  #service:
-    #name: httpd
-    #state: started
-    #enabled: true
+- name: Install libapreq2 package for httpd mod_apreq2.so module requirement
+  vars:
+    ansible_python_interpreter: /usr/bin/python2.6
+  yum:
+     name: libapreq2
+     state: present
+
+- name: Start and enable httpd
+  service:
+    name: httpd
+    state: started
+    enabled: true
     

@@ -1,15 +1,32 @@
-s3_files:
-  - packages/oracle/oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
-  - packages/oracle/oracle-instantclient11.2-devel-11.2.0.2.0.x86_64.rpm
-  - packages/oracle/oracle-instantclient11.2-sqlplus-11.2.0.2.0.x86_64.rpm
-  - application/ewf/frontend/ewf-frontend.tar.gz
+---
 users:
- - name: ewf
+  - name: ewf
+    groups: chlservices
+
 user_home_path: /home/ewf
-pip_package: python-pip
-pip_install_packages:
- - name: boto
- - name: boto3
-   version: "1.4.7"
- - name: botocore
-   version: "1.7.36"
+
+tar_files:
+  - ewf-frontend-app.tar.gz
+  - ewf-frontend-static.tar.gz 
+
+s3_file_app_static: /application/ewf/frontend/ewf-frontend-static.tar.gz
+s3_file_app: /application/ewf/frontend/ewf-frontend-app.tar.gz
+s3_files_app_static_name: ewf-frontend-static.tar.gz
+s3_files_app_name: ewf-frontend-app.tar.gz
+
+user_home_path_content:
+  - DATA
+  - MODULES
+  - htdocs
+  - config
+  - usr
+
+files_to_remove: 'oracle-instantclient*,*.tar.gz,get-pip*,Python*'
+
+http_config:
+  - httpd/conf.d/ewf_perl.conf
+  - httpd/conf/ewf_startup.pl
+  - httpd/conf/httpd.conf
+
+user: ewf
+group: chlservices

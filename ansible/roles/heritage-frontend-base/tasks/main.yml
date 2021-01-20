@@ -114,7 +114,7 @@
     state: absent
   with_items: '{{ perl_binaries }}'
 
-- name: Install Perl binaries
+- name: Install Perl binaries and other static content
   copy:
     src: /tmp/usr
     dest: /
@@ -133,7 +133,7 @@
   file:
     path: "/tmp/{{ item }}"
     state: absent
-  with_items: '{{ user_home_path_content }}'
+  with_items: '{{ user_home_path_content_delete }}'
 
 - name: Delete installation files
   find:

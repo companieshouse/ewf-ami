@@ -14,21 +14,6 @@ s3_file_app: /application/ewf/frontend/ewf-frontend-app.tar.gz
 s3_files_app_static_name: ewf-frontend-static.tar.gz
 s3_files_app_name: ewf-frontend-app.tar.gz
 
-user_home_path_content:
-  - DATA
-  - MODULES
-  - htdocs
-  - config
-
-user_home_path_content_delete:
-  - DATA
-  - MODULES
-  - htdocs
-  - config
-  - usr
-
-files_to_remove: 'oracle-instantclient*,*.tar.gz,get-pip*,Python*'
-
 http_config:
   - httpd/conf.d/ewf_perl.conf
   - httpd/conf/ewf_startup.pl

@@ -31,3 +31,18 @@ perl_binaries:
   - /usr/share/perl5
 
 http_conf: /etc/httpd/conf/httpd.conf
+
+user_home_path_content:
+  - DATA
+  - MODULES
+  - htdocs
+  - config
+
+user_home_path_content_delete:
+  - DATA
+  - MODULES
+  - htdocs
+  - config
+  - usr
+
+files_to_remove: 'oracle-instantclient*,*.tar.gz,get-pip*,Python*'

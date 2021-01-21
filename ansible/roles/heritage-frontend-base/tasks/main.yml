@@ -1,4 +1,10 @@
 ---
+- name: Install dependencies
+  package:
+    name: '{{ item }}'
+    state: present
+  with_items: '{{ required_packages }}'
+
 - name: Set SELinux to permissive
   vars:
     ansible_python_interpreter: /usr/bin/python2.6
@@ -13,16 +19,27 @@
 
 - name: Create groups
   group:
-    name: "chlservices"
-    gid: "600"
+    #name: "chlservices"
+    name: '{{ groups }}'
+    #gid: "600"
+    gid: '{{ gid }}'
     state: present
+
+#- name: Create users
+  #user:
+    #name: '{{ item.name }}'
+    #groups: '{{ item.groups }}'
+    #state: present
+  #with_items: '{{ users }}'
 
 - name: Create users
   user:
-    name: '{{ item.name }}'
-    groups: '{{ item.groups }}'
+    name: '{{ item[0] }}'
+    groups: '{{ item[1] }}'
     state: present
-  with_items: '{{ users }}'
+  with_nested:
+    - "{{ users }}"
+    - "{{ groups }}"
 
 # Can only download one s3 object at a time
 - name: Download Oracle setup files from s3 - basic rpm
@@ -110,15 +127,16 @@
 
 - name: Remove any exisitng Perl binaries
   file:
-    path: '{{ item }}'
+    path: "{{ item }}"
     state: absent
   with_items: '{{ perl_binaries }}'
 
-- name: Install Perl binaries and other static content
+- name: Install Perl binaries
   copy:
-    src: /tmp/usr
-    dest: /
+    src: "/tmp/{{ item }}/"
+    dest: "/{{ item }}"
     remote_src: yes
+  with_items: '{{ perl_binaries }}'
 
 - name: Install base application files to home path
   copy:
@@ -149,18 +167,31 @@
 
 - name: Remove any exisitng httpd.conf
   file:
-    path: '{{ item }}'
+    path: "{{ item }}"
     state: absent
   with_items: '{{ http_conf }}'
+
+#- name: Install httpd configs
+  #vars:
+    #ansible_python_interpreter: /usr/bin/python2.6
+  #copy:
+    #src: "{{ item }}"
+    #dest: "/etc/{{ item }}"
+    #owner: '{{ users }}'
+    #group: '{{ groups }}'
+    #mode: 0775
+  #with_items: '{{ http_config }}'
 
 - name: Install httpd configs
   vars:
     ansible_python_interpreter: /usr/bin/python2.6
   copy:
-    src: "{{ item }}"
-    dest: "/etc/{{ item }}"
-    owner: '{{ user }}'
-    group: '{{ group }}'
+    src: "{{ item[3] }}"
+    dest: "/etc/{{ item[3] }}"
+    owner: '{{ item[0] }}'
+    group: '{{ item[1] }}'
     mode: 0775
-  with_items: '{{ http_config }}'
-
+  with_nested:
+    - "{{ users }}"
+    - "{{ groups }}"
+    - '{{ http_config }}'

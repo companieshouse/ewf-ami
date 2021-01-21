@@ -1,11 +1,14 @@
 ---
-groups:
-  - name: chlservices
-    gid: 600
+required_packages: 
+  - httpd
+  - mod_ssl
+  - mod_perl
+
+#groups:
+  #- name: chlservices
+    #gid: 600
 
 s3_bucket: development-eu-west-2.resources.ch.gov.uk
-s3_files_oracle: /packages/oracle/oracle-database-10.2.0.tar.gz
-s3_files_oracle_name: oracle-database-10.2.0.tar.gz
 
 s3_files_oracle_basic_rpm: /packages/oracle/oracle-instantclient11.2-basic-11.2.0.2.0.x86_64.rpm
 s3_files_oracle_devel_rpm: /packages/oracle/oracle-instantclient11.2-devel-11.2.0.2.0.x86_64.rpm
@@ -25,8 +28,6 @@ ld_so_conf:
 perl_binaries:
   - /usr/local/lib64/perl5 
   - /usr/local/share/perl5 
-  - /usr/lib64/perl5/vendor_perl 
-  - /usr/share/perl5/vendor_perl 
   - /usr/lib64/perl5 
   - /usr/share/perl5
 
@@ -38,6 +39,31 @@ user_home_path_content:
   - htdocs
   - config
 
+files_to_remove: 'oracle-instantclient*,*.tar.gz'
+
+#users:
+  #- name: ewf
+    #groups: chlservices
+
+user_home_path: /home/ewf
+
+tar_files:
+  - ewf-frontend-app.tar.gz
+  - ewf-frontend-static.tar.gz 
+
+s3_file_app_static: /application/ewf/frontend/ewf-frontend-static.tar.gz
+s3_file_app: /application/ewf/frontend/ewf-frontend-app.tar.gz
+s3_files_app_static_name: {{ s3_file_app_static | basename }}
+s3_files_app_name: {{ s3_file_app | basename }}
+
+http_config:
+  - httpd/conf.d/ewf_perl.conf
+  - httpd/conf/ewf_startup.pl
+  - httpd/conf/httpd.conf
+
+#user: ewf
+#group: chlservices
+
 user_home_path_content_delete:
   - DATA
   - MODULES
@@ -45,4 +71,11 @@ user_home_path_content_delete:
   - config
   - usr
 
-files_to_remove: 'oracle-instantclient*,*.tar.gz,get-pip*,Python*'
+users:
+ - ewf
+ 
+groups:
+ - chlservices
+
+gid:
+  - 600

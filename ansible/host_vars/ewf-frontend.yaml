@@ -1,23 +1,4 @@
 ---
-users:
-  - name: ewf
-    groups: chlservices
 
-user_home_path: /home/ewf
 
-tar_files:
-  - ewf-frontend-app.tar.gz
-  - ewf-frontend-static.tar.gz 
 
-s3_file_app_static: /application/ewf/frontend/ewf-frontend-static.tar.gz
-s3_file_app: /application/ewf/frontend/ewf-frontend-app.tar.gz
-s3_files_app_static_name: ewf-frontend-static.tar.gz
-s3_files_app_name: ewf-frontend-app.tar.gz
-
-http_config:
-  - httpd/conf.d/ewf_perl.conf
-  - httpd/conf/ewf_startup.pl
-  - httpd/conf/httpd.conf
-
-user: ewf
-group: chlservices

@@ -21,14 +21,14 @@
 
 - name: Create groups
   group:
-    #name: "chlservices"
-    name: '{{ item[0] }}'
-    #gid: "600"
-    gid: '{{ item[1] }}'
+    name: "chlservices"
+    #name: '{{ item[0] }}'
+    gid: "600"
+    #gid: '{{ item[1] }}'
     state: present
-  with_nested:
-    - "{{ groups }}"
-    - "{{ gid }}"
+  #with_nested:
+    #- "{{ groups }}"
+    #- "{{ gid }}"
 
 #- name: Create users
   #user:

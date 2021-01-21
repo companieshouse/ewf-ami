@@ -134,8 +134,8 @@
   copy:
     src: "/tmp/{{ item }}"
     dest: '{{ user_home_path }}'
-    owner: '{{ user }}'
-    group: '{{ group }}'
+    owner: '{{ users }}'
+    group: '{{ user_groups }}'
     remote_src: yes
   with_items: '{{ user_home_path_content }}'
 

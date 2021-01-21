@@ -26,7 +26,7 @@
     #gid: "600"
     gid: '{{ item[1] }}'
     state: present
-   with_nested:
+  with_nested:
     - "{{ groups }}"
     - "{{ gid }}"
 

@@ -1,53 +1,28 @@
 ---
 - name: Apply mod_cookietrack.so http module
+  vars:
+    ansible_python_interpreter: /usr/bin/python2.6
   copy:
-    src: /tmp
+    src: /tmp/etc/httpd/modules/mod_cookietrack.so
     dest: /etc/httpd/modules/mod_cookietrack.so
     mode: 0755
- 
-- name: Delete installation files
-  find:
-    paths: /tmp
-    patterns: 'mod_cookietrack.so'
-  register: files_to_delete
-
-- name: Remove installation files
-  file:
-    path: "{{ item.path }}"
-    state: absent
-  with_items: "{{ files_to_delete.files }}"
-
-- name: Download ewf specific files from s3
-  aws_s3:
-    bucket: s3://development-eu-west-2.resources.ch.gov.uk/
-    object: '{{ item }}'
-    dest: /tmp
-    mode: get
-  with_items: '{{ s3_files }}'
-
-- name: Unarchive tar files
-  unarchive:
     remote_src: yes
-    src: /tmp/*.tar.gz
-    dest: /tmp
-
-- name: Install base application files
-  copy:
-    src: "/tmp/{{ item }}"
-    dest: /tmp/ewf
-  with_items:
-    - DATA
-    - MODULES
-    - htdocs
-    - config
-
-- name: Remove installation files
+ 
+- name: Remove mod_cookietrack.so installation file
   file:
-    path: "/tmp/{{ item }}"
+    path: /tmp/etc
     state: absent
-  with_items:
-    - DATA
-    - MODULES
-    - htdocs
-    - config
-    - '*.tar.gz'
+
+- name: Install libapreq2 package for httpd mod_apreq2.so module requirement
+  vars:
+    ansible_python_interpreter: /usr/bin/python2.6
+  yum:
+     name: libapreq2
+     state: present
+
+- name: Start and enable httpd
+  service:
+    name: httpd
+    state: started
+    enabled: true
+    

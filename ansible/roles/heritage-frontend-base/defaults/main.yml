@@ -73,8 +73,7 @@ user_home_path_content_delete:
 users:
  - service_user
  
-groups:
- - chlservices
+user_groups:
+  - chlservices
 
-gid: 
-  - 600
+gid_value: 600

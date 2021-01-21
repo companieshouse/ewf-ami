@@ -21,31 +21,17 @@
 
 - name: Create groups
   group:
-    name: "chlservices"
-    #name: '{{ item[0] }}'
-    gid: "600"
-    #gid: '{{ item[1] }}'
+    name: '{{ item }}'
+    gid: '{{ gid_value }}'
     state: present
-  #with_nested:
-    #- "{{ groups }}"
-    #- "{{ gid }}"
-
-#- name: Create users
-  #user:
-    #name: '{{ item.name }}'
-    #groups: '{{ item.groups }}'
-    #state: present
-  #with_items: '{{ users }}'
+  with_items: '{{ user_groups }}'
 
 - name: Create users
   user:
-    name: '{{ item[0] }}'
-    #groups: '{{ item[1] }}'
-    groups: "chlservices"
+    name: "{{ item.0 }}"
+    groups: "{{ item.1 }}"
     state: present
-  with_nested:
-    - "{{ users }}"
-    #- "{{ groups }}"
+  loop: "{{ users|zip(user_groups)|list }}"
 
 # Can only download one s3 object at a time
 - name: Download Oracle setup files from s3 - basic rpm
@@ -199,5 +185,5 @@
     mode: 0775
   with_nested:
     - "{{ users }}"
-    - "{{ groups }}"
+    - "{{ user_groups }}"
     - '{{ http_config }}'

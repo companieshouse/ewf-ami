@@ -132,11 +132,10 @@
 
 - name: Install base application files to home path
   copy:
-    src: "{{ item.0 }}"
-    dest: "/etc/{{ item.0 }}"
-    owner: "{{ item.1 }}"
-    group: "{{ item.2 }}"
-    mode: 0775
+    src: "/tmp/{{ item[0] }}"
+    dest: "{{ user_home_path }}"
+    owner: "{{ item[1] }}"
+    group: "{{ item[2] }}"
     remote_src: yes
   loop: "{{ user_home_path_content|product(users, user_groups)|list }}"
 
@@ -179,12 +178,9 @@
   vars:
     ansible_python_interpreter: /usr/bin/python2.6
   copy:
-    src: "{{ item[3] }}"
-    dest: "/etc/{{ item[3] }}"
-    owner: '{{ item[0] }}'
-    group: '{{ item[1] }}'
+    src: "{{ item[0] }}"
+    dest: "/etc/{{ item[0] }}"
+    owner: '{{ item[1] }}'
+    group: '{{ item[2] }}'
     mode: 0775
-  with_nested:
-    - "{{ users }}"
-    - "{{ user_groups }}"
-    - '{{ http_config }}'
+  loop: "{{ http_config|product(users, user_groups)|list }}"

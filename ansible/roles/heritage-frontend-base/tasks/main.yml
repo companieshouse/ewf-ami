@@ -40,11 +40,12 @@
 - name: Create users
   user:
     name: '{{ item[0] }}'
-    groups: '{{ item[1] }}'
+    #groups: '{{ item[1] }}'
+    groups: "chlservices"
     state: present
   with_nested:
     - "{{ users }}"
-    - "{{ groups }}"
+    #- "{{ groups }}"
 
 # Can only download one s3 object at a time
 - name: Download Oracle setup files from s3 - basic rpm

@@ -76,5 +76,5 @@ users:
 groups:
  - chlservices
 
-gid:
+gid: 
   - 600

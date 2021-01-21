@@ -132,12 +132,13 @@
 
 - name: Install base application files to home path
   copy:
-    src: "/tmp/{{ item }}"
-    dest: '{{ user_home_path }}'
-    owner: '{{ users }}'
-    group: '{{ user_groups }}'
+    src: "{{ item.0 }}"
+    dest: "/etc/{{ item.0 }}"
+    owner: "{{ item.1 }}"
+    group: "{{ item.2 }}"
+    mode: 0775
     remote_src: yes
-  with_items: '{{ user_home_path_content }}'
+  loop: "{{ user_home_path_content|product(users, user_groups)|list }}"
 
 - name: Remove base application installation files
   file:

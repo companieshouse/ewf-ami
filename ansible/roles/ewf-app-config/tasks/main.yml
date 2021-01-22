@@ -1,30 +1,27 @@
 ---
 - name: Apply mod_cookietrack.so http module
+  vars:
+    ansible_python_interpreter: /usr/bin/python2.6
   copy:
-    src: /tmp
+    src: /tmp/etc/httpd/modules/mod_cookietrack.so
     dest: /etc/httpd/modules/mod_cookietrack.so
     mode: 0755
+    remote_src: yes
  
-- name: Delete installation files
-  find:
-    paths: /tmp
-    patterns: 'mod_cookietrack.so'
-  register: files_to_delete
-
-- name: Remove installation files
+- name: Remove mod_cookietrack.so installation file
   file:
-    path: "{{ item.path }}"
+    path: /tmp/etc
     state: absent
-  with_items: "{{ files_to_delete.files }}"
 
-- name: Install httpd configs
-  copy:
-    src: "{{ item }}"
-    dest: "/etc/{{ item }}"
-    owner: ewf
-    group: chlservices
-    mode: 0775
-  with_items:
-    - httpd/conf.d/ewf_perl.conf
-    - httpd/conf/ewf_startup.pl
-    - httpd/conf/httpd.conf
+- name: Install libapreq2 package for httpd mod_apreq2.so module requirement
+  vars:
+    ansible_python_interpreter: /usr/bin/python2.6
+  yum:
+     name: libapreq2
+     state: present
+
+- name: Start and enable httpd
+  service:
+    name: httpd
+    state: started
+    enabled: true

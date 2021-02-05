@@ -1,10 +1,11 @@
 ---  
-- name: AMI Build
-  hosts: ewf-frontend
+- hosts: ewf-frontend
   become: true
   gather_facts: yes
+  collections: 
+    - ch-collections.base
   vars:
     ansible_python_interpreter: /usr/local/bin/python3.6
   roles:
-    - role: heritage-frontend-base
-    - role: ewf-app-config
+    - ch_collections.heritage_services.heritage-frontend-base
+    - ewf-app-config

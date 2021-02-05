@@ -1,0 +1,5 @@
+---
+collections:
+  - name: https://github.com/companieshouse/ansible-collections.git#ch_collections/heritage_services
+    version: 0.1.7
+    type: git

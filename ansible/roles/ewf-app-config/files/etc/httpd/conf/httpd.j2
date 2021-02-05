@@ -277,7 +277,7 @@ Group chlservices
 # e-mailed.  This address appears on some server-generated pages, such
 # as error documents.  e.g. admin@your-domain.com
 #
-ServerAdmin enquiries@companieshouse.gov.uk
+ServerAdmin enquiries@{{ domain_name }}
 
 #
 # ServerName gives the name and port that the server uses to identify itself.
@@ -291,7 +291,7 @@ ServerAdmin enquiries@companieshouse.gov.uk
 # You will have to access it by its address anyway, and this will make 
 # redirections work in a sensible way.
 #
-ServerName REGEXREPLACE_SERVERNAME
+ServerName {{ env_service_name }}.{{ domain_name }}
 
 #
 # UseCanonicalName: Determines how Apache constructs self-referencing 
@@ -333,10 +333,11 @@ DocumentRoot "/home/ewf/htdocs/efiling/"
 #
 # This should be changed to whatever you set DocumentRoot to.
 #
-### EWFLIVE ### EWFLIVE ### EWFLIVE ### EWFLIVE ### EWFLIVE ### EWFLIVE ### EWFLIVE ### EWFLIVE ###
+### EWF ### EWF ### EWF ### EWF ### EWF ### EWF ### EWF ### EWF ### EWF ### EWF ###
 
   CookieTracking on
-  CookieDomain .companieshouse.gov.uk
+  CookieDomain .{{ domain_name }}
+  
   CookieExpires "25 months"
   CookieName "chcookie"
 
@@ -345,14 +346,14 @@ DocumentRoot "/home/ewf/htdocs/efiling/"
   RewriteEngine on
 
   RewriteCond %{HTTP_HOST} ^cy\.
-  RewriteRule (.*) https://ewfv.companieshouse.gov.uk$1?lang=cy [L]
+  RewriteRule (.*) https://{{ env_service_name }}.{{ domain_name }}$1?lang=cy [L]
 
   #RewriteRule ^/$ /home/ewf/htdocs/efiling/handlers/welcome #prejointincs
   RewriteRule ^/$ /home/ewf/htdocs/efiling/handlers/seclogin
 
 #  RewriteCond %{HTTPS} off
-#  RewriteRule (.*) https://ewfv.companieshouse.gov.uk/seclogin
-  #RewriteRule (.*) https://ewf.companieshouse.gov.uk/seclogin
+#  RewriteRule (.*) https://{{ env_service_name }}.{{ domain_name }}/seclogin
+  #RewriteRule (.*) https://{{ env_service_name }}.{{ domain_name }}/seclogin
 
   # Handle 'Common' Resource mapping
   #
@@ -497,8 +498,8 @@ AliasMatch ^.*/(.*)\.htc$ "/home/ewf/htdocs/efiling/static/style/$1.htc"
     DirectoryIndex welcome index
   </Directory>
 
-### EWFLIVE ### EWFLIVE ### EWFLIVE ### EWFLIVE ### EWFLIVE ### EWFLIVE ### EWFLIVE ### EWFLIVE ###
-#
+### EWF ### EWF ### EWF ### EWF ### EWF ### EWF ### EWF ### EWF ### EWF ### EWF ###
+
 # UserDir: The name of the directory that is appended onto a user's home
 # directory if a ~user request is received.
 #
@@ -1125,7 +1126,7 @@ BrowserMatch "^gnome-vfs" redirect-carefully
     SetHandler server-status
     Order deny,allow
     Deny from all
-    Allow from 172.19.0.0/12
+    Allow from {{ server_status_allow_from_list}}
 </Location>
 
 #
@@ -1137,7 +1138,7 @@ BrowserMatch "^gnome-vfs" redirect-carefully
     SetHandler server-info
     Order deny,allow
     Deny from all
-    Allow from 172.19.0.0/12
+    Allow from {{ server_status_allow_from_list}}
 </Location>
 
 #

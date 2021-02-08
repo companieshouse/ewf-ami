@@ -1,4 +1,7 @@
 ---
+selinux_status:
+  - state: disabled
+
 users:
   - name: ewf
     group: chlservices

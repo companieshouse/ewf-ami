@@ -1,4 +1,8 @@
 ---
+selinux_status:
+  - policy: targeted
+    state: disabled
+
 users:
   - name: ewf
     group: chlservices

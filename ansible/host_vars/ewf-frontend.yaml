@@ -1,6 +1,7 @@
 ---
 selinux_status:
-  - state: disabled
+  - policy: targeted
+    state: disabled
 
 users:
   - name: ewf

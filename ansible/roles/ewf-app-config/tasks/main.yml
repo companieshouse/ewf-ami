@@ -13,6 +13,8 @@
     dest: /tmp/
 
 - name: Apply mod_cookietrack.so http module
+  vars:
+    ansible_python_interpreter: /usr/bin/python2.6
   copy:
     src: /tmp/etc/httpd/modules/mod_cookietrack.so
     dest: /etc/httpd/modules/mod_cookietrack.so
@@ -31,23 +33,21 @@
      name: libapreq2
      state: present
 
-- name: Apply mod_cookietrack.so http module
+- name: Copy config templates to relevant locations
+  vars:
+    ansible_python_interpreter: /usr/bin/python2.6
   copy:
     src: "{{ item }}"
-    dest: /"{{ item }}"
+    dest: "/{{ item }}"
     mode: 0755
   loop:
     - etc/httpd/conf/httpd.j2
     - etc/httpd/conf/ewf_startup.j2
     - etc/httpd/conf.d/ewf_perl.j2
 
-- name: Start and enable httpd
-  service:
-    name: httpd
-    state: started
-    enabled: true
-
 - name: Copy deployment playbook onto server for build time
+  vars:
+    ansible_python_interpreter: /usr/bin/python2.6  
   copy:
     src: deployment.yml
     dest: /root/deployment.yml

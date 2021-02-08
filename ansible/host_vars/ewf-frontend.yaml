@@ -3,6 +3,7 @@ selinux_status:
   - policy: targeted
     state: permissive
 
+
 users:
   - name: ewf
     group: chlservices

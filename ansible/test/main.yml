@@ -8,7 +8,7 @@
         image: "centos:centos6.10"
         # The network setting allows for idempotent testing.
         # without it the role creates a brand new container, with it the container is re-used.
-        # network_mode: bridge
+        network_mode: bridge
         provision_docker_volumes: 
           - /lib/modules:/lib/modules
   roles:

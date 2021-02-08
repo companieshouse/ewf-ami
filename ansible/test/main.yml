@@ -16,5 +16,12 @@
       provision_docker_inventory: "{{ inventory }}"
       provision_docker_privileged: True
 
+- hosts: ewf-frontend
+  become: true
+  collections:
+    - ch_collections.enterpriselinux6
+  roles:
+    - centos6_base_repo #ch_collections.enterpriselinux6
+
 - import_playbook: ../playbook.yml
 

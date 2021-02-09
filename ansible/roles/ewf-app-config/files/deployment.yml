@@ -40,7 +40,7 @@
           remote_src: yes
 
       - name: Create Matomo templates
-        ansible.builtin.command: perl -I {{ home_dir }}/config/ {{ home_dir }}/htdocs/efiling/templates/matomo.pl
+        command: perl -I {{ home_dir }}/config/ {{ home_dir }}/htdocs/efiling/templates/matomo.pl
         args:
           creates: "{{ home_dir }}/htdocs/efiling/templates/matomo.pl"
 

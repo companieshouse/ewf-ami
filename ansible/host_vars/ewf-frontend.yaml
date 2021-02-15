@@ -15,3 +15,6 @@ s3_file_perl_lib_name: '{{ s3_file_perl_lib | basename }}'
 
 tar_files:
   - "{{ s3_file_perl_lib_name }}"
+
+#Disable watcher service initially untill we have tested NFS functionality
+install_watcher_service: false

@@ -54,3 +54,9 @@
         with_items:
           - "/tmp/{{ application_name }}-{{ version }}"
           - "/tmp/{{ application_name }}-{{ version }}.zip"
+
+      - name: Make sure Apache is started
+        service:
+          name: "httpd"
+          state: reloaded
+          enabled: yes

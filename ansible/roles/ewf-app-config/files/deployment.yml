@@ -10,6 +10,8 @@
         - "DATA" 
         - "MODULES"
         - "htdocs"
+    roles:
+      - nfs_mounts
     tasks:
       - name: Download the versioned release artifact from S3
         aws_s3:
@@ -52,3 +54,9 @@
         with_items:
           - "/tmp/{{ application_name }}-{{ version }}"
           - "/tmp/{{ application_name }}-{{ version }}.zip"
+
+      - name: Make sure Apache is started
+        service:
+          name: "httpd"
+          state: reloaded
+          enabled: yes

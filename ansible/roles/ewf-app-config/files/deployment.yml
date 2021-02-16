@@ -1,7 +1,7 @@
 ---
   - name: Deploy EWF artifact
     hosts: localhost
-    gather_facts: false
+    gather_facts: true
     vars:
       ansible_python_interpreter: /usr/local/bin/python3.6
       application_name: "ewf"

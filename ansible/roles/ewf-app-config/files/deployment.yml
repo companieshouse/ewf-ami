@@ -34,7 +34,7 @@
           ansible_python_interpreter: /usr/bin/python2.6
         copy:
           src: "/tmp/{{ application_name }}-{{ version }}/{{ item }}"
-          dest: "{{ home_dir }}/{{ item }}"
+          dest: "{{ home_dir }}/"
           mode: preserve
           owner: "{{ home_dir | basename }}"
           remote_src: yes

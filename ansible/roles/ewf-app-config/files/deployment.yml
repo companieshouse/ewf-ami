@@ -15,7 +15,7 @@
     tasks:
       - name: Download the versioned release artifact from S3
         aws_s3:
-          bucket: "{{ s3_bucket }}"
+          bucket: "{{ s3_bucket_releases }}"
           object: "chl-perl/{{ application_name }}/{{ application_name }}-{{ version }}.zip"
           dest: "/tmp/{{ application_name }}-{{ version }}.zip"
           mode: get
@@ -41,6 +41,27 @@
           owner: "{{ home_dir | basename }}"
           remote_src: yes
         loop: "{{ directories }}"
+
+      - name: Make sure config.pm directory exists
+        file:
+          path: "{{ home_dir }}/config/My"
+          state: directory
+          recurse: yes
+          mode: '0644'
+
+      - name: Download environment config.pm file from S3
+        aws_s3:
+          bucket: "{{ s3_bucket_configs }}"
+          object: "chl-{{ application_name }}-configs/{{ environment }}/{{ application_name|upper }}Config.pm"
+          dest: "{{ home_dir }}/config/My/{{ application_name|upper }}Config.pm"
+          mode: get
+
+      - name: Change config.pm owner and permissions
+        ansible.builtin.file:
+          path: "{{ home_dir }}/config/My/{{ application_name|upper }}Config.pm"
+          owner: ewf
+          group: chlservices
+          mode: '0644'
 
       - name: Create Matomo templates
         command: perl -I {{ home_dir }}/config/ {{ home_dir }}/htdocs/efiling/templates/matomo.pl

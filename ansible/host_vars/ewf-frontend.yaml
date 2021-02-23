@@ -11,7 +11,7 @@ users:
     
 user_home_path: /home/ewf
 
-s3_file_perl_lib: /application/ewf/frontend/ewf-frontend-static.tar.gz
+s3_file_perl_lib: /application/shared/libraries/perl-xerces-lib.tar.gz
 s3_file_perl_lib_name: '{{ s3_file_perl_lib | basename }}'
 
 tar_files:

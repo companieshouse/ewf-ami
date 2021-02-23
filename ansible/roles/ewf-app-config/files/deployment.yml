@@ -52,9 +52,11 @@
       - name: Download environment config.pm file from S3
         aws_s3:
           bucket: "{{ s3_bucket_configs }}"
-          object: "chl-{{ application_name }}-configs/{{ environment }}/{{ application_name|upper }}Config.pm"
+          object: "chl-{{ application_name }}-configs/{{ heritage_environment }}/{{ application_name|upper }}Config.pm"
           dest: "{{ home_dir }}/config/My/{{ application_name|upper }}Config.pm"
           mode: get
+
+          chl-ewf-configs/[]/EWFConfig.pm
 
       - name: Change config.pm owner and permissions
         ansible.builtin.file:
@@ -79,5 +81,5 @@
       - name: Make sure Apache is started
         service:
           name: "httpd"
-          state: reloaded
+          state: restarted
           enabled: yes

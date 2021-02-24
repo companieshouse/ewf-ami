@@ -76,6 +76,17 @@
           - "/tmp/{{ application_name }}-{{ version }}"
           - "/tmp/{{ application_name }}-{{ version }}.zip"
 
+      - name: Ensure apache config files are all owned and permissions are set correctly
+        ansible.builtin.file:
+          path: "{{ item }}"
+          owner: ewf
+          group: chlservices
+          mode: '0644'
+        loop:
+          - /etc/httpd/conf/httpd.conf
+          - /etc/httpd/conf/ewf_startup.pl
+          - /etc/httpd/conf.d/ewf_perl.conf
+
       - name: Make sure Apache is started
         service:
           name: "httpd"

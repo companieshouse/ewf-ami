@@ -384,8 +384,8 @@ DocumentRoot "/home/ewf/htdocs/efiling/"
     Allow from all
   </Directory>
 
-  Alias /ewfimages/ "/mnt/ha/image/ewf2/"
-  <Directory "/mnt/ha/image/ewf2/">
+  Alias /ewfimages/ "/mnt/nfs/ewf/image"
+  <Directory "/mnt/nfs/ewf/image">
     Order allow,deny
     Allow from all
   </Directory>

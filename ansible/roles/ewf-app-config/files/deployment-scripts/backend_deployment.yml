@@ -45,21 +45,21 @@
           remote_src: yes
         loop: "{{ directories }}"
       
-      - name: Symlinking "My::" to modules
-        ansible.builtin.file:
-          src: "{{ home_dir }}/config/My"
-          path: "{{ home_dir }}/modules/"
-          owner: xml
-          group: chlservices
-          mode: '0644'
-          state: link
-
       - name: Make sure config directory exists
         file:
           path: "{{ home_dir }}/config/My"
           state: directory
           recurse: yes
           mode: '755'
+
+      - name: Symlinking "My::" to modules
+        ansible.builtin.file:
+          src: "{{ home_dir }}/config/My"
+          path: "{{ home_dir }}/MODULES/"
+          owner: xml
+          group: chlservices
+          mode: '0755'
+          state: link
 
       - name: Download environment config files from S3
         aws_s3:

@@ -1,15 +1,18 @@
 ---
-  - name: Deploy EWF artifact
+  - name: Deploy EWF Backend artifact
     hosts: localhost
     gather_facts: true
     vars:
       ansible_python_interpreter: /usr/local/bin/python3.6
-      application_name: "ewf"
+      application_name: "ewf-backend"
       home_dir: "/home/ewf"
       directories:
         - "DATA" 
         - "MODULES"
-        - "htdocs"
+        - "bcdbackend"
+        - "chd3backend"
+        - "efbackend"
+        - "conf"
     roles:
       - { role: /root/roles/nfs_mounts }
     tasks:
@@ -41,32 +44,42 @@
           owner: "{{ home_dir | basename }}"
           remote_src: yes
         loop: "{{ directories }}"
+      
+      - name: Symlinking "My::" to modules
+        ansible.builtin.file:
+          src: "{{ home_dir }}/config/My"
+          path: "{{ home_dir }}/modules/"
+          owner: xml
+          group: chlservices
+          mode: '0644'
+          state: link
 
-      - name: Make sure config.pm directory exists
+      - name: Make sure config directory exists
         file:
           path: "{{ home_dir }}/config/My"
           state: directory
           recurse: yes
-          mode: '0755'
+          mode: '755'
 
-      - name: Download environment config.pm file from S3
+      - name: Download environment config files from S3
         aws_s3:
           bucket: "{{ s3_bucket_configs }}"
-          object: "chl-{{ application_name }}-configs/{{ heritage_environment }}/{{ application_name|upper }}Config.pm"
-          dest: "{{ home_dir }}/config/My/{{ application_name|upper }}Config.pm"
+          object: "chl-{{ application_name }}-configs/{{ heritage_environment }}/{{ item | upper }}Config.pm"
+          dest: "{{ home_dir }}/config/My/{{ item | upper }}Config.pm"
           mode: get
+        with_items:
+          - BEP
+          - EWF
 
-      - name: Change config.pm owner and permissions
+      - name: Change config owners and permissions
         ansible.builtin.file:
-          path: "{{ home_dir }}/config/My/{{ application_name|upper }}Config.pm"
-          owner: ewf
+          path: "{{ home_dir }}/config/My/{{ item | upper }}Config.pm"
+          owner: xml
           group: chlservices
-          mode: '0755'
-
-      - name: Create Matomo templates
-        command: perl -I {{ home_dir }}/config/ {{ home_dir }}/htdocs/efiling/templates/tracker.pl
-        args:
-          creates: "{{ home_dir }}/htdocs/efiling/templates/tracker.pl"
+          mode: '755'
+        with_items:
+          - BEP
+          - EWF
 
       - name: Cleanup install files
         file:
@@ -76,19 +89,8 @@
           - "/tmp/{{ application_name }}-{{ version }}"
           - "/tmp/{{ application_name }}-{{ version }}.zip"
 
-      - name: Ensure apache config files are all owned and permissions are set correctly
-        ansible.builtin.file:
-          path: "{{ item }}"
-          owner: ewf
-          group: chlservices
-          mode: '0644'
-        loop:
-          - /etc/httpd/conf/httpd.conf
-          - /etc/httpd/conf/ewf_startup.pl
-          - /etc/httpd/conf.d/ewf_perl.conf
-
-      - name: Make sure Apache is started
+      - name: Make sure Apache is disabled and stopped
         service:
           name: "httpd"
-          state: restarted
-          enabled: yes
+          state: stopped
+          enabled: no

@@ -54,3 +54,4 @@
     mode: 0755
   loop:
     - deployment-scripts/frontend_deployment.yml
+    - deployment-scripts/backend_deployment.yml

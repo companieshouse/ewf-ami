@@ -13,6 +13,9 @@
         - "chd3backend"
         - "efbackend"
         - "conf"
+      config_files:
+        - "BEP"
+        - "EWF"
     roles:
       - { role: /root/roles/nfs_mounts }
     tasks:
@@ -40,14 +43,17 @@
         copy:
           src: "/tmp/{{ application_name }}-{{ version }}/{{ item }}"
           dest: "{{ home_dir }}/"
-          mode: preserve
           owner: "{{ home_dir | basename }}"
+          group: chlservices
+          mode: preserve
           remote_src: yes
         loop: "{{ directories }}"
       
       - name: Make sure config directory exists
         file:
           path: "{{ home_dir }}/config/My"
+          owner: "{{ home_dir | basename }}"
+          group: chlservices
           state: directory
           recurse: yes
           mode: '755'
@@ -55,10 +61,9 @@
       - name: Symlinking "My::" to modules
         ansible.builtin.file:
           src: "{{ home_dir }}/config/My"
-          path: "{{ home_dir }}/MODULES/"
-          owner: xml
+          path: "{{ home_dir }}/MODULES/My"
+          owner: "{{ home_dir | basename }}"
           group: chlservices
-          mode: '0755'
           state: link
 
       - name: Download environment config files from S3
@@ -67,19 +72,15 @@
           object: "chl-{{ application_name }}-configs/{{ heritage_environment }}/{{ item | upper }}Config.pm"
           dest: "{{ home_dir }}/config/My/{{ item | upper }}Config.pm"
           mode: get
-        with_items:
-          - BEP
-          - EWF
+        loop: "{{ config_files }}"
 
       - name: Change config owners and permissions
         ansible.builtin.file:
           path: "{{ home_dir }}/config/My/{{ item | upper }}Config.pm"
-          owner: xml
+          owner: "{{ home_dir | basename }}"
           group: chlservices
           mode: '755'
-        with_items:
-          - BEP
-          - EWF
+        loop: "{{ config_files }}"
 
       - name: Cleanup install files
         file:

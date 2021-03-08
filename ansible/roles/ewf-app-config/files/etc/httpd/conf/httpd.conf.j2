@@ -384,14 +384,14 @@ DocumentRoot "/home/ewf/htdocs/efiling/"
     Allow from all
   </Directory>
 
-  Alias /ewfimages/ "/mnt/nfs/ewf/image"
-  <Directory "/mnt/nfs/ewf/image">
+  Alias /ewfimages/ "/mnt/nfs/fillings/image/"
+  <Directory "/mnt/nfs/fillings/image/">
     Order allow,deny
     Allow from all
   </Directory>
 
-  Alias /ewfupload/ "/mnt/nfs/ewf/upload/"
-   <Directory "/mnt/nfs/ewf/upload/">
+  Alias /ewfupload/ "/mnt/nfs/fillings/upload/"
+   <Directory "/mnt/nfs/fillings/upload/">
     Order allow,deny
     Allow from all
   </Directory>

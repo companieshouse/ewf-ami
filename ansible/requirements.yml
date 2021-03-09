@@ -2,7 +2,6 @@
 collections:
   - name: https://github.com/companieshouse/ansible-collections.git#ch_collections/heritage_services
     version: 0.1.22
-
     type: git
 
   - name: ansible.posix

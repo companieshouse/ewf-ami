@@ -10,6 +10,9 @@
         - "DATA" 
         - "MODULES"
         - "htdocs"
+      config_files:
+        - "EWF"
+        - "COM"
     roles:
       - { role: /root/roles/nfs_mounts }
     tasks:
@@ -42,28 +45,30 @@
           remote_src: yes
         loop: "{{ directories }}"
 
-      - name: Make sure config.pm directory exists
+      - name: Make sure config directory exists
         file:
           path: "{{ home_dir }}/config/My"
           state: directory
           recurse: yes
           mode: '0755'
 
-      - name: Download environment config.pm file from S3
+      - name: Download environment config files from S3
         aws_s3:
           bucket: "{{ s3_bucket_configs }}"
-          object: "chl-{{ application_name }}-configs/{{ heritage_environment }}/{{ application_name|upper }}Config.pm"
-          dest: "{{ home_dir }}/config/My/{{ application_name|upper }}Config.pm"
+          object: "chl-{{ application_name }}-configs/{{ heritage_environment }}/{{ item | upper }}Config.pm"
+          dest: "{{ home_dir }}/config/My/{{ item | upper }}Config.pm"
           mode: get
+        loop: "{{ config_files }}"
 
-      - name: Change config.pm owner and permissions
+      - name: Change config owners and permission
         ansible.builtin.file:
-          path: "{{ home_dir }}/config/My/{{ application_name|upper }}Config.pm"
-          owner: ewf
+          path: "{{ home_dir }}/config/My/{{ item | upper }}Config.pm"
+          owner: "{{ home_dir | basename }}"
           group: chlservices
           mode: '0755'
+        loop: "{{ config_files }}"
 
-      - name: Create Matomo templates
+        - name: Create Matomo templates
         command: perl -I {{ home_dir }}/config/ {{ home_dir }}/htdocs/efiling/templates/tracker.pl
         args:
           creates: "{{ home_dir }}/htdocs/efiling/templates/tracker.pl"

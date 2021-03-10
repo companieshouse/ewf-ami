@@ -2,8 +2,6 @@
 - hosts: ewf-frontend
   become: true
   gather_facts: yes
-  collections: 
-    - ch-collections.base
   vars:
     ansible_python_interpreter: /usr/local/bin/python3.6
   roles:

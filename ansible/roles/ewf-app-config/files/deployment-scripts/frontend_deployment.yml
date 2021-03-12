@@ -20,16 +20,6 @@
       - name: ch_collections.base.cloudwatch_agent_config
         when: cw_log_files is defined
     tasks:
-      - name: Setup CW Agent log access permissions
-        ansible.builtin.file:
-          path: "{{ item }}"
-          state: directory
-          recurse: no
-          group: cwagent
-          mode: "g+rw"
-        loop:
-          - "/var/log"
-
       - name: Download the versioned release artifact from S3
         aws_s3:
           bucket: "{{ s3_bucket_releases }}"

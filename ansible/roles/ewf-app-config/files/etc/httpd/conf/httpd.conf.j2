@@ -435,7 +435,7 @@ DocumentRoot "/home/ewf/htdocs/efiling/"
     Allow from all
   </Directory>
 
-Alias /hmrc-accounts/ "/home/ewf/htdocs/efiling/static/hmrc-accounts/"
+  Alias /hmrc-accounts/ "/home/ewf/htdocs/efiling/static/hmrc-accounts/"
   <Directory "/home/ewf/htdocs/efiling/static/hmrc-accounts">
     #SetHandler default-handler
     Order allow,deny
@@ -446,12 +446,23 @@ Alias /hmrc-accounts/ "/home/ewf/htdocs/efiling/static/hmrc-accounts/"
     </FilesMatch>
   </Directory>
 
+  Alias /scrs_plus/ "/home/ewf/htdocs/efiling/static/scrs_plus/"
+  <Directory "/home/ewf/htdocs/efiling/static/scrs_plus">
+      Order allow,deny
+      Allow from all
+  </Directory>
 
-  # Site Common Handlers
-  #
-#web incs two new alias match below
-AliasMatch ^.*/com-(.*)\.htc$ "/home/ewf/htdocs/sitecommon/style/$1.htc"
-AliasMatch ^.*/(.*)\.htc$ "/home/ewf/htdocs/efiling/static/style/$1.htc"
+  Alias /gov_uk/ "/home/ewf/htdocs/efiling/static/gov_uk/"
+  <Directory "/home/ewf/htdocs/efiling/static/gov_uk">
+    Order allow,deny
+    Allow from all
+  </Directory>
+
+# Site Common Handlers
+#
+# web incs two new alias match below
+  AliasMatch ^.*/com-(.*)\.htc$ "/home/ewf/htdocs/sitecommon/style/$1.htc"
+  AliasMatch ^.*/(.*)\.htc$ "/home/ewf/htdocs/efiling/static/style/$1.htc"
   AliasMatch ^/com-(.*) "/home/ewf/htdocs/sitecommon/handlers/$1"
   <Directory  "/home/ewf/htdocs/sitecommon/handlers">
     Options Indexes Includes FollowSymLinks +ExecCGI

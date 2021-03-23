@@ -44,8 +44,9 @@
         copy:
           src: "/tmp/{{ application_name }}-{{ version }}/{{ item }}"
           dest: "{{ home_dir }}/"
-          mode: preserve
+          mode: '0755'
           owner: "{{ home_dir | basename }}"
+          group: chlservices
           remote_src: yes
         loop: "{{ directories }}"
 
@@ -88,7 +89,7 @@
       - name: Ensure apache config files are all owned and permissions are set correctly
         ansible.builtin.file:
           path: "{{ item }}"
-          owner: ewf
+          owner: "{{ home_dir | basename }}"
           group: chlservices
           mode: '0644'
         loop:

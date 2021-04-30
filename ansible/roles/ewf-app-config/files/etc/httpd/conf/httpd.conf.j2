@@ -384,8 +384,8 @@ DocumentRoot "/home/ewf/htdocs/efiling/"
     Allow from all
   </Directory>
 
-  Alias /ewfimages/ "/mnt/nfs/filings/recent_filings/image/"
-  <Directory "/mnt/nfs/filings/recent_filings/image/">
+  Alias /ewfimages/ "/mnt/nfs/filings/recent_filings/"
+  <Directory "/mnt/nfs/filings/recent_filings/">
     Order allow,deny
     Allow from all
   </Directory>
@@ -659,7 +659,7 @@ LogLevel warn
 # The following directives define some format nicknames for use with
 # a CustomLog directive (see below).
 #
-LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" \"%{cookie}n\" %{pid}P" combined 
+LogFormat "%{X-Forwarded-For}i %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" \"%{cookie}n\" %{pid}P" combined 
 LogFormat "%h %l %u %t \"%r\" %>s %b" common
 LogFormat "%{Referer}i -> %U" referer
 LogFormat "%{User-agent}i" agent

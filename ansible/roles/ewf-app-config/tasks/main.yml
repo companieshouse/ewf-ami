@@ -45,6 +45,14 @@
     - etc/httpd/conf/ewf_startup.pl
     - etc/httpd/conf.d/ewf_perl.conf.j2
 
+- name: Create falsemnt directory in EWF home
+  file:
+    path: /home/ewf/falsemnt
+    state: directory
+    owner: ewf
+    group: chlservices
+    mode: '755'  
+    
 - name: Update Postfix configuration for mail relay (existing commented lines)
   lineinfile:
     dest: "/etc/postfix/{{ postfix_main_config_file }}"
@@ -59,6 +67,19 @@
     line: "{{ item.key }} = {{ item.value }}"
     regexp: "^{{ item.key }} ="
   with_items: "{{ postfix_net_config }}"
+
+- name: Enable crontab for EWF user
+  lineinfile:
+    dest: "/etc/cron.allow"
+    line: "ewf"
+    regexp: "^ewf"
+
+- name: Allow ewf to use apachectl 
+  copy:
+    dest: "/etc/sudoers.d/ewf"
+    content: |
+      # EWF user
+      ewf ALL=(ALL) NOPASSWD:/usr/sbin/apachectl
 
 - name: Copy deployment scripts to server for later use
   vars:

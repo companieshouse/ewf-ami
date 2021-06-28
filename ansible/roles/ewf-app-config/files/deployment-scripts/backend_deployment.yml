@@ -2,14 +2,14 @@
   - name: Deploy EWF Backend artifact
     hosts: localhost
     gather_facts: true
-    collections: 
+    collections:
       - ch_collections.base
     vars:
       ansible_python_interpreter: /usr/local/bin/python3.6
       application_name: "ewf-backend"
       home_dir: "/home/ewf"
       directories:
-        - "DATA" 
+        - "DATA"
         - "MODULES"
         - "bcdbackend"
         - "chd3backend"
@@ -20,7 +20,6 @@
         - "EWF"
         - "COM"
       supportscripts_file: "supportscripts"
-      supportscripts_location: "/home/supportbackend"        
     roles:
       - { role: /root/roles/nfs_mounts }
       - name: ch_collections.base.cloudwatch_agent_config
@@ -37,13 +36,13 @@
         file:
           path: "/tmp/{{ application_name }}-{{ version }}"
           state: directory
-      
+
       - name: Unarchive the artifact into its own folder
         unarchive:
           remote_src: yes
           src: "/tmp/{{ application_name }}-{{ version }}.zip"
           dest: "/tmp/{{ application_name }}-{{ version }}"
-      
+
       - name: Copy app directories to app user home
         vars:
           ansible_python_interpreter: /usr/bin/python2.6
@@ -56,17 +55,17 @@
           remote_src: yes
         loop: "{{ directories }}"
 
-      - name: Copy support scripts to support user home
+      - name: Copy support scripts to app user home
         vars:
           ansible_python_interpreter: /usr/bin/python2.6
         copy:
           src: "/tmp/{{ application_name }}-{{ version }}/{{ supportscripts_file }}"
-          dest: "{{ supportscripts_location }}/"
-          owner: "{{ supportscripts_location | basename }}"
+          dest: "{{ home_dir }}/"
+          owner: "{{ home_dir | basename }}"
           group: chlservices
           mode: preserve
           remote_src: yes
-        
+
       - name: Make sure config directory exists
         file:
           path: "{{ home_dir }}/config/My"

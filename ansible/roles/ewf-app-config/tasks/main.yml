@@ -51,7 +51,23 @@
     state: directory
     owner: ewf
     group: chlservices
-    mode: '755'  
+    mode: 0755
+
+- name: Create falsemnt image directory in EWF home
+  file:
+    path: /home/ewf/falsemnt/image
+    state: directory
+    owner: ewf
+    group: chlservices
+    mode: 0755
+
+- name: Create falsemnt email directory in EWF home
+  file:
+    path: /home/ewf/falsemnt/email
+    state: directory
+    owner: ewf
+    group: chlservices
+    mode: 0755
     
 - name: Update Postfix configuration for mail relay (existing commented lines)
   lineinfile:

@@ -51,8 +51,19 @@
     state: directory
     owner: ewf
     group: chlservices
-    mode: '755'  
-    
+    mode: 0755
+
+- name: Create additional falsemnt directories in EWF home
+  file:
+    path: "/home/ewf/falsemnt/{{ item }}"
+    state: directory
+    owner: ewf
+    group: chlservices
+    mode: 0755
+  with_items:
+    - "image"
+    - "email"
+
 - name: Update Postfix configuration for mail relay (existing commented lines)
   lineinfile:
     dest: "/etc/postfix/{{ postfix_main_config_file }}"

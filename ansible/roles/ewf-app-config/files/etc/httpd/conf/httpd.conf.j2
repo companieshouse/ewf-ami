@@ -8,7 +8,7 @@
 #
 # Do NOT simply read the instructions in here without understanding
 # what they do.  They're here only as hints or reminders.  If you are unsure
-# consult the online docs. You have been warned.  
+# consult the online docs. You have been warned.
 #
 # The configuration directives are grouped into three basic sections:
 #  1. Directives that control the operation of the Apache server process as a
@@ -98,7 +98,7 @@ KeepAliveTimeout 15
 
 ##
 ## Server-Pool Size Regulation (MPM specific)
-## 
+##
 
 # prefork MPM
 # StartServers: number of server processes to start
@@ -107,7 +107,7 @@ KeepAliveTimeout 15
 # MaxClients: maximum number of server processes allowed to start
 # MaxRequestsPerChild: maximum number of requests a server process serves
 <IfModule prefork.c>
-StartServers      5 
+StartServers      5
 MinSpareServers   5
 MaxSpareServers   20
 MaxClients        85
@@ -125,7 +125,7 @@ MaxRequestsPerChild  100
 #StartServers         2
 #MaxClients         150
 #MinSpareThreads      2
-#MaxSpareThreads      5 
+#MaxSpareThreads      5
 #ThreadsPerChild      5
 #MaxRequestsPerChild  20
 
@@ -143,7 +143,7 @@ MaxRequestsPerChild  100
 # ports, in addition to the default. See also the <VirtualHost>
 # directive.
 #
-# Change this to Listen on specific IP addresses as shown below to 
+# Change this to Listen on specific IP addresses as shown below to
 # prevent Apache from glomming onto all bound IP addresses (0.0.0.0)
 # e.g. "Listen 12.34.56.78:80"
 #
@@ -259,14 +259,14 @@ ExtendedStatus On
 
 #
 # If you wish httpd to run as a different user or group, you must run
-# httpd as root initially and it will switch.  
+# httpd as root initially and it will switch.
 #
 # User/Group: The name (or #number) of the user/group to run httpd as.
 #  . On SCO (ODT 3) use "User nouser" and "Group nogroup".
 #  . On HPUX you may not be able to use shared memory as nobody, and the
 #    suggested workaround is to create a user www and use that user.
 #  NOTE that some kernels refuse to setgid(Group) or semctl(IPC_SET)
-#  when the value of (unsigned)Group is above 60000; 
+#  when the value of (unsigned)Group is above 60000;
 #  don't use Group #-1 on these systems!
 #
 User ewf
@@ -288,13 +288,13 @@ ServerAdmin enquiries@{{ domain_name }}
 # redirections will not work.  See also the UseCanonicalName directive.
 #
 # If your host doesn't have a registered DNS name, enter its IP address here.
-# You will have to access it by its address anyway, and this will make 
+# You will have to access it by its address anyway, and this will make
 # redirections work in a sensible way.
 #
 ServerName {{ env_service_name }}.{{ domain_name }}
 
 #
-# UseCanonicalName: Determines how Apache constructs self-referencing 
+# UseCanonicalName: Determines how Apache constructs self-referencing
 # URLs and the SERVER_NAME and SERVER_PORT variables.
 # When set "Off", Apache will use the Hostname and Port supplied
 # by the client.  When set "On", Apache will use the value of the
@@ -312,10 +312,10 @@ DocumentRoot "/home/ewf/htdocs/efiling/"
 #
 # Each directory to which Apache has access can be configured with respect
 # to which services and features are allowed and/or disabled in that
-# directory (and its subdirectories). 
+# directory (and its subdirectories).
 #
-# First, we configure the "default" to be a very restrictive set of 
-# features.  
+# First, we configure the "default" to be a very restrictive set of
+# features.
 #
 <Directory />
     Options FollowSymLinks
@@ -337,7 +337,7 @@ DocumentRoot "/home/ewf/htdocs/efiling/"
 
   CookieTracking on
   CookieDomain .{{ domain_name }}
-  
+
   CookieExpires "25 months"
   CookieName "chcookie"
 
@@ -350,6 +350,12 @@ DocumentRoot "/home/ewf/htdocs/efiling/"
 
   #RewriteRule ^/$ /home/ewf/htdocs/efiling/handlers/welcome #prejointincs
   RewriteRule ^/$ /home/ewf/htdocs/efiling/handlers/seclogin
+
+  RedirectMatch 301 (.*)/welcome $1/seclogin
+
+  RewriteCond %{HTTP:Authorization} ^(.*)
+  RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+
 
 #  RewriteCond %{HTTPS} off
 #  RewriteRule (.*) https://{{ env_service_name }}.{{ domain_name }}/seclogin
@@ -364,7 +370,7 @@ DocumentRoot "/home/ewf/htdocs/efiling/"
   Alias /includes/com  "/home/ewf/htdocs/sitecommon/includes/"
 # web inc change below
   Alias /scripts/com  "/home/ewf/htdocs/sitecommon/scripts/"
-  
+
   # This regex is peculiar to avoid matching ../sitecommon/handlers as this
   # needs executable permissions.
   #
@@ -372,10 +378,10 @@ DocumentRoot "/home/ewf/htdocs/efiling/"
     # Two levels deep.... (images/en/ for example)
     #
     Options Includes FollowSymLinks
-    Order allow,deny 
+    Order allow,deny
     Allow from all
   </Directory>
-  
+
   <Directory ~ "/home/ewf/htdocs/sitecommon/[sih][tmen].*">
     # One level deep.... (style/style.css for example)
     #
@@ -534,7 +540,7 @@ DocumentRoot "/home/ewf/htdocs/efiling/"
     # To enable requests to /~user/ to serve the user's public_html
     # directory, remove the "UserDir disable" line above, and uncomment
     # the following line instead:
-    # 
+    #
     #UserDir public_html
 
 </IfModule>
@@ -561,7 +567,7 @@ DocumentRoot "/home/ewf/htdocs/efiling/"
 # is requested.
 #
 # The index.html.var file (a type-map) is used to deliver content-
-# negotiated documents.  The MultiViews Option can be used for the 
+# negotiated documents.  The MultiViews Option can be used for the
 # same purpose, but it is much slower.
 #
 # DirectoryIndex login index index.html index.html.var
@@ -574,8 +580,8 @@ DocumentRoot "/home/ewf/htdocs/efiling/"
 AccessFileName .htaccess
 
 #
-# The following lines prevent .htaccess and .htpasswd files from being 
-# viewed by Web clients. 
+# The following lines prevent .htaccess and .htpasswd files from being
+# viewed by Web clients.
 #
 <Files ~ "^\.ht">
     Order allow,deny
@@ -622,7 +628,7 @@ HostnameLookups Off
 #
 # EnableMMAP: Control whether memory-mapping is used to deliver
 # files (assuming that the underlying OS supports it).
-# The default is on; turn this off if you serve from NFS-mounted 
+# The default is on; turn this off if you serve from NFS-mounted
 # filesystems.  On some systems, turning it off (regardless of
 # filesystem) can improve performance; for details, please see
 # http://httpd.apache.org/docs-2.0/mod/core.html#enablemmap
@@ -630,9 +636,9 @@ HostnameLookups Off
 #EnableMMAP off
 
 #
-# EnableSendfile: Control whether the sendfile kernel support is 
-# used to deliver files (assuming that the OS supports it). 
-# The default is on; turn this off if you serve from NFS-mounted 
+# EnableSendfile: Control whether the sendfile kernel support is
+# used to deliver files (assuming that the OS supports it).
+# The default is on; turn this off if you serve from NFS-mounted
 # filesystems.  Please see
 # http://httpd.apache.org/docs-2.0/mod/core.html#enablesendfile
 #
@@ -659,7 +665,7 @@ LogLevel warn
 # The following directives define some format nicknames for use with
 # a CustomLog directive (see below).
 #
-LogFormat "%{X-Forwarded-For}i %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" \"%{cookie}n\" %{pid}P" combined 
+LogFormat "%{X-Forwarded-For}i %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" \"%{cookie}n\" %{pid}P" combined
 LogFormat "%h %l %u %t \"%r\" %>s %b" common
 LogFormat "%{Referer}i -> %U" referer
 LogFormat "%{User-agent}i" agent
@@ -697,13 +703,13 @@ CustomLog /var/log/httpd/ewf_access_log combined
 ServerSignature Off
 
 #
-# Aliases: Add here as many aliases as you need (with no limit). The format is 
+# Aliases: Add here as many aliases as you need (with no limit). The format is
 # Alias fakename realname
 #
 # Note that if you include a trailing / on fakename then the server will
 # require it to be present in the URL.  So "/icons" isn't aliased in this
-# example, only "/icons/".  If the fakename is slash-terminated, then the 
-# realname must also be slash terminated, and if the fakename omits the 
+# example, only "/icons/".  If the fakename is slash-terminated, then the
+# realname must also be slash terminated, and if the fakename omits the
 # trailing slash, the realname must also omit it.
 #
 # We include the /icons/ alias for FancyIndexed directory listings.  If you
@@ -773,7 +779,7 @@ RedirectMatch 301 (.*)/welcome $1/seclogin
 
 #
 # FancyIndexing is whether you want fancy directory indexing or standard.
-# VersionSort is whether files containing version numbers should be 
+# VersionSort is whether files containing version numbers should be
 # compared in the natural way, so that `apache-1.3.9.tar' is placed before
 # `apache-1.3.12.tar'.
 #
@@ -834,7 +840,7 @@ IndexOptions FancyIndexing VersionSort NameWidth=*
 # default, and append to directory listings.
 #
 # HeaderName is the name of a file which should be prepended to
-# directory indexes. 
+# directory indexes.
 #
 ReadmeName README.html
 HeaderName HEADER.html
@@ -855,16 +861,16 @@ AddEncoding x-compress Z
 AddEncoding x-gzip gz tgz
 
 #
-# DefaultLanguage and AddLanguage allows you to specify the language of 
-# a document. You can then use content negotiation to give a browser a 
+# DefaultLanguage and AddLanguage allows you to specify the language of
+# a document. You can then use content negotiation to give a browser a
 # file in a language the user can understand.
 #
 # Specify a default language. This means that all data
-# going out without a specific language tag (see below) will 
+# going out without a specific language tag (see below) will
 # be marked with this one. You probably do NOT want to set
 # this unless you are sure it is correct for all cases.
 #
-# * It is generally better to not mark a page as 
+# * It is generally better to not mark a page as
 # * being a certain language than marking it with the wrong
 # * language!
 #
@@ -875,8 +881,8 @@ AddEncoding x-gzip gz tgz
 # language code is pl) may wish to use "AddLanguage pl .po" to
 # avoid the ambiguity with the common suffix for perl scripts.
 #
-# Note 2: The example entries below illustrate that in some cases 
-# the two character 'Language' abbreviation is not identical to 
+# Note 2: The example entries below illustrate that in some cases
+# the two character 'Language' abbreviation is not identical to
 # the two character 'Country' code for its country,
 # E.g. 'Danmark/dk' versus 'Danish/da'.
 #
@@ -886,7 +892,7 @@ AddEncoding x-gzip gz tgz
 #
 # Danish (da) - Dutch (nl) - English (en) - Estonian (et)
 # French (fr) - German (de) - Greek-Modern (el)
-# Italian (it) - Norwegian (no) - Norwegian Nynorsk (nn) - Korean (ko) 
+# Italian (it) - Norwegian (no) - Norwegian Nynorsk (nn) - Korean (ko)
 # Portugese (pt) - Luxembourgeois* (ltz)
 # Spanish (es) - Swedish (sv) - Catalan (ca) - Czech(cs)
 # Polish (pl) - Brazilian Portuguese (pt-br) - Japanese (ja)
@@ -988,7 +994,7 @@ AddCharset UTF-8       .utf8
 # See http://www.iana.org/assignments/character-sets
 # for a list of sorts. But browsers support few.
 #
-AddCharset GB2312      .gb2312 .gb 
+AddCharset GB2312      .gb2312 .gb
 AddCharset utf-7       .utf7
 AddCharset utf-8       .utf8
 AddCharset big5        .big5 .b5
@@ -1064,7 +1070,7 @@ AddType text/x-component .htc
 # Putting this all together, we can Internationalize error responses.
 #
 # We use Alias to redirect any /error/HTTP_<error>.html.var response to
-# our collection of by-error message multi-language collections.  We use 
+# our collection of by-error message multi-language collections.  We use
 # includes to substitute the appropriate text.
 #
 # You can modify the messages' appearance without changing any of the
@@ -1125,8 +1131,8 @@ BrowserMatch "JDK/1\.0" force-response-1.0
 
 #
 # The following directive disables redirects on non-GET requests for
-# a directory that does not include the trailing slash.  This fixes a 
-# problem with Microsoft WebFolders which does not appropriately handle 
+# a directory that does not include the trailing slash.  This fixes a
+# problem with Microsoft WebFolders which does not appropriately handle
 # redirects for folders with DAV methods.
 # Same deal with Apple's DAV filesystem and Gnome VFS support for DAV.
 #
@@ -1198,7 +1204,7 @@ BrowserMatch "^gnome-vfs" redirect-carefully
 # use only name-based virtual hosts so the server doesn't need to worry about
 # IP addresses. This is indicated by the asterisks in the directives below.
 #
-# Please see the documentation at 
+# Please see the documentation at
 # <URL:http://httpd.apache.org/docs-2.0/vhosts/>
 # for further details before you try to setup virtual hosts.
 #

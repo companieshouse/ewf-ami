@@ -76,8 +76,6 @@
 
       - name: Create Matomo templates
         command: perl -I {{ home_dir }}/config/ {{ home_dir }}/htdocs/efiling/templates/tracker.pl
-        args:
-          creates: "{{ home_dir }}/htdocs/efiling/templates/tracker.pl"
 
       - name: Cleanup install files
         file:

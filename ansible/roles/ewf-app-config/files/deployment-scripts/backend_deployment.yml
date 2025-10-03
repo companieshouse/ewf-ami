@@ -101,3 +101,21 @@
           name: "httpd"
           state: stopped
           enabled: no
+      
+      - name: Group for finance mount
+        group:
+          gid: 1003
+          name: e5fsadmin
+          state: present
+      
+      - name: Append ewf user to finance group
+        user: 
+          name: ewf
+          groups: e5fsadmin
+          append: yes
+
+      - name: Check if user has been added to group
+        ansible.builtin.command: grep "e5fsadmin" /etc/group
+        no_log: true
+
+
